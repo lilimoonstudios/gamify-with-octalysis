@@ -128,7 +128,7 @@
     @media (max-width: 900px) {
       .oct-hero { width: 100%; height: auto; aspect-ratio: 1; max-width: 500px; }
       #ring-svg { width: 100%; height: 100%; }
-      .spoke-card { width: 100px; padding: 8px 10px; }
+      .spoke-card { width: 100px; padding: 8px 10px; font-size: .7rem; }
       .spoke-name { font-size: .65rem; }
       .spoke-desc { display: none; }
     }
@@ -1364,16 +1364,7 @@
         return Array.from({length:8}, (_,i) => { const v=vtx(i,r); return `${v.x},${v.y}`; }).join(' ');
       }
 
-      // Glow shadow
-      const shadow = document.createElementNS(SVG_NS, 'polygon');
-      shadow.setAttribute('points', octPts(R_OUTER + 6));
-      shadow.setAttribute('fill', 'none');
-      shadow.setAttribute('stroke', 'rgba(37,99,235,.12)');
-      shadow.setAttribute('stroke-width', '14');
-      shadow.setAttribute('stroke-linejoin', 'round');
-      svg.appendChild(shadow);
-
-      // Spokes (behind ring)
+      // Spokes (behind ring) — draw first so they appear behind everything
       const cardPos = [
         {x:400,y:66},{x:655,y:170},{x:726,y:400},{x:655,y:630},
         {x:400,y:734},{x:145,y:630},{x:74,y:400},{x:145,y:170}
@@ -1386,8 +1377,17 @@
         line.setAttribute('stroke', '#93c5fd');
         line.setAttribute('stroke-width', '1.5');
         line.setAttribute('stroke-dasharray', '4,3');
-        svg.insertBefore(line, svg.firstChild);
+        svg.appendChild(line);
       });
+
+      // Glow shadow (above spokes, below ring)
+      const shadow = document.createElementNS(SVG_NS, 'polygon');
+      shadow.setAttribute('points', octPts(R_OUTER + 6));
+      shadow.setAttribute('fill', 'none');
+      shadow.setAttribute('stroke', 'rgba(37,99,235,.12)');
+      shadow.setAttribute('stroke-width', '14');
+      shadow.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(shadow);
 
       // Outer ring
       const outer = document.createElementNS(SVG_NS, 'polygon');
