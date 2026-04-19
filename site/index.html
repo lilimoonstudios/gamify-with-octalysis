@@ -69,75 +69,69 @@
     }
     .nav-playground:hover { background: #161b22; }
 
-    /* ── HERO ─────────────────────────────────────────────── */
+    /* ── HERO ──────────────────────────────────────────── */
     .hero {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 64px 40px 56px;
+      background: #fff; border-bottom: 1px solid #E5E7EB;
+      padding: 64px 24px 72px; text-align: center;
     }
-    .hero-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 64px;
-      align-items: center;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: #F5F3FF;
-      border: 1px solid #DDD6FE;
-      border-radius: 20px;
-      padding: 5px 16px;
-      font-size: .75rem;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      color: #8B5CF6;
-      font-weight: 700;
+    .hero-eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: #8B5CF6; margin-bottom: 12px;
     }
     .hero h1 {
-      font-size: 2.6rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.15;
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -.04em;
+      line-height: 1.1; color: #111827; margin-bottom: 10px;
     }
     .hero h1 .grad {
-      background: linear-gradient(90deg, #F59E0B, #EC4899, #8B5CF6, #06B6D4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: linear-gradient(90deg,#F59E0B,#EC4899,#8B5CF6,#06B6D4);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hero-desc {
-      color: var(--muted);
-      margin-top: 16px;
-      font-size: 1.02rem;
-      max-width: 520px;
-      line-height: 1.7;
+    .hero-sub {
+      font-size: 1rem; color: #6B7280; max-width: 520px;
+      margin: 0 auto 48px; line-height: 1.7;
     }
-    .hero-author {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: .88rem;
-      color: var(--muted);
+    .oct-hero {
+      position: relative; width: 800px; height: 800px;
+      margin: 0 auto;
     }
-    .hero-author strong { color: var(--text); }
-    .hero-pills { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
-    .hat-pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 16px;
-      border-radius: 30px;
-      border: 1.5px solid;
-      font-size: .82rem;
-      font-weight: 700;
+    #ring-svg {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 800px; height: 800px;
     }
-    .hat-pill.white { color: var(--white-hat); border-color: #86EFAC; background: var(--white-hat-l); }
-    .hat-pill.black { color: #374151; border-color: #D1D5DB; background: #F9FAFB; }
-    .hero-oct { display: flex; justify-content: center; align-items: center; }
-    #hero-svg { width: 100%; max-width: 340px; filter: drop-shadow(0 8px 24px rgba(0,0,0,.12)); }
+    .spoke-card {
+      position: absolute; transform: translate(-50%,-50%);
+      background: #fff; border-radius: 14px; padding: 12px 14px;
+      border: 1.5px solid #E5E7EB;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.04);
+      width: 148px; cursor: pointer; transition: all .2s;
+      text-decoration: none; color: inherit;
+    }
+    .spoke-card:hover {
+      border-color: #2563EB;
+      box-shadow: 0 4px 16px rgba(37,99,235,.15), 0 0 0 3px rgba(37,99,235,.1);
+      transform: translate(-50%,-50%) scale(1.04);
+    }
+    .spoke-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .spoke-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #2563EB; color: #fff; font-size: .68rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .spoke-icon-box {
+      width: 32px; height: 32px; border-radius: 8px; background: #EFF6FF;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem; flex-shrink: 0; margin-left: auto;
+    }
+    .spoke-name { font-size: .78rem; font-weight: 800; color: #2563EB; line-height: 1.25; margin-bottom: 4px; }
+    .spoke-desc { font-size: .67rem; color: #6B7280; line-height: 1.45; }
+    @media (max-width: 900px) {
+      .oct-hero { width: 100%; height: auto; aspect-ratio: 1; max-width: 500px; }
+      #ring-svg { width: 100%; height: 100%; }
+      .spoke-card { width: 100px; padding: 8px 10px; }
+      .spoke-name { font-size: .65rem; }
+      .spoke-desc { display: none; }
+    }
 
     /* ── TWO-PANEL EXPLORER ───────────────────────────────── */
     .explorer-wrap {
@@ -477,9 +471,6 @@
 
     /* ── RESPONSIVE ──────────────────────────────────────── */
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-oct { order: -1; }
-      #hero-svg { max-width: 260px; }
       .explorer-wrap { grid-template-columns: 1fr; }
       .explorer-sticky { position: static; }
       .examples-grid { grid-template-columns: 1fr; }
@@ -501,28 +492,54 @@
   </nav>
 
   <!-- ── HERO ──────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <span class="hero-badge">Gamification Framework</span>
-        <h1>The <span class="grad">Octalysis</span><br>Framework</h1>
-        <p class="hero-desc">
-          A comprehensive model of the 8 core drives of human motivation — the forces behind why we do anything at all. Use it to design experiences that are genuinely engaging, not just addictive.
-        </p>
-        <div class="hero-author">
-          <span>Framework by</span>
-          <strong>Yu-kai Chou</strong>
-          <span>·</span>
-          <span>Author of <em>Actionable Gamification</em></span>
-        </div>
-        <div class="hero-pills">
-          <div class="hat-pill white">⬜ White Hat — motivates positively</div>
-          <div class="hat-pill black">⬛ Black Hat — urgency &amp; anxiety</div>
-        </div>
-      </div>
-      <div class="hero-oct">
-        <svg id="hero-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"></svg>
-      </div>
+  <section class="hero" id="hero">
+    <div class="hero-eyebrow">The Octalysis Framework</div>
+    <h1>The <span class="grad">8 Core Drives</span><br>of Human Motivation</h1>
+    <p class="hero-sub">A framework by Yu-kai Chou for designing genuinely engaging experiences. Click any drive to read its full description.</p>
+
+    <div class="oct-hero">
+      <svg id="ring-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg"></svg>
+
+      <a href="#drive-1" class="spoke-card" style="left:400px;top:66px">
+        <div class="spoke-card-top"><div class="spoke-num">1</div><div class="spoke-icon-box">🌐</div></div>
+        <div class="spoke-name">Epic Meaning &amp; Calling</div>
+        <div class="spoke-desc">The drive to become part of something bigger than ourselves.</div>
+      </a>
+      <a href="#drive-2" class="spoke-card" style="left:655px;top:170px">
+        <div class="spoke-card-top"><div class="spoke-num">2</div><div class="spoke-icon-box">🏆</div></div>
+        <div class="spoke-name">Development &amp; Accomplishment</div>
+        <div class="spoke-desc">The drive to level up, improve, and achieve progress.</div>
+      </a>
+      <a href="#drive-3" class="spoke-card" style="left:726px;top:400px">
+        <div class="spoke-card-top"><div class="spoke-num">3</div><div class="spoke-icon-box">🧩</div></div>
+        <div class="spoke-name">Empowerment of Creativity</div>
+        <div class="spoke-desc">The drive to create, experiment, and get real feedback.</div>
+      </a>
+      <a href="#drive-4" class="spoke-card" style="left:655px;top:630px">
+        <div class="spoke-card-top"><div class="spoke-num">4</div><div class="spoke-icon-box">📦</div></div>
+        <div class="spoke-name">Ownership &amp; Possession</div>
+        <div class="spoke-desc">The drive to collect, accumulate, and organise.</div>
+      </a>
+      <a href="#drive-5" class="spoke-card" style="left:400px;top:734px">
+        <div class="spoke-card-top"><div class="spoke-num">5</div><div class="spoke-icon-box">👥</div></div>
+        <div class="spoke-name">Social Influence &amp; Relatedness</div>
+        <div class="spoke-desc">The drive to collaborate, compete, and express social identity.</div>
+      </a>
+      <a href="#drive-6" class="spoke-card" style="left:145px;top:630px">
+        <div class="spoke-card-top"><div class="spoke-num">6</div><div class="spoke-icon-box">⏳</div></div>
+        <div class="spoke-name">Scarcity &amp; Impatience</div>
+        <div class="spoke-desc">The drive to obsess over what we cannot have yet.</div>
+      </a>
+      <a href="#drive-7" class="spoke-card" style="left:74px;top:400px">
+        <div class="spoke-card-top"><div class="spoke-num">7</div><div class="spoke-icon-box">🎲</div></div>
+        <div class="spoke-name">Unpredictability &amp; Curiosity</div>
+        <div class="spoke-desc">The drive to know what is unpredictable and new.</div>
+      </a>
+      <a href="#drive-8" class="spoke-card" style="left:145px;top:170px">
+        <div class="spoke-card-top"><div class="spoke-num">8</div><div class="spoke-icon-box">🚩</div></div>
+        <div class="spoke-name">Loss &amp; Avoidance</div>
+        <div class="spoke-desc">The drive to avoid undesirable outcomes and protect current state.</div>
+      </a>
     </div>
   </section>
 
@@ -1279,9 +1296,6 @@
       return segs;
     }
 
-    // Build hero octagon (decorative)
-    buildOctSVG(document.getElementById('hero-svg'), 200, 200, 175, false);
-
     // Build interactive explorer octagon
     const octSegs = buildOctSVG(document.getElementById('oct-svg'), 200, 200, 170, true);
 
@@ -1335,6 +1349,109 @@
         link.classList.add('active');
       });
     });
+
+    (function buildSpokeRing() {
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const svg = document.getElementById('ring-svg');
+      if (!svg) return;
+      const CX = 400, CY = 400, R_OUTER = 200, R_INNER = 130;
+
+      function vtx(i, r) {
+        const a = (-90 + i * 45) * Math.PI / 180;
+        return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
+      }
+      function octPts(r) {
+        return Array.from({length:8}, (_,i) => { const v=vtx(i,r); return `${v.x},${v.y}`; }).join(' ');
+      }
+
+      // Glow shadow
+      const shadow = document.createElementNS(SVG_NS, 'polygon');
+      shadow.setAttribute('points', octPts(R_OUTER + 6));
+      shadow.setAttribute('fill', 'none');
+      shadow.setAttribute('stroke', 'rgba(37,99,235,.12)');
+      shadow.setAttribute('stroke-width', '14');
+      shadow.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(shadow);
+
+      // Spokes (behind ring)
+      const cardPos = [
+        {x:400,y:66},{x:655,y:170},{x:726,y:400},{x:655,y:630},
+        {x:400,y:734},{x:145,y:630},{x:74,y:400},{x:145,y:170}
+      ];
+      cardPos.forEach((pos, i) => {
+        const v = vtx(i, R_OUTER);
+        const line = document.createElementNS(SVG_NS, 'line');
+        line.setAttribute('x1', v.x); line.setAttribute('y1', v.y);
+        line.setAttribute('x2', pos.x); line.setAttribute('y2', pos.y);
+        line.setAttribute('stroke', '#93c5fd');
+        line.setAttribute('stroke-width', '1.5');
+        line.setAttribute('stroke-dasharray', '4,3');
+        svg.insertBefore(line, svg.firstChild);
+      });
+
+      // Outer ring
+      const outer = document.createElementNS(SVG_NS, 'polygon');
+      outer.setAttribute('points', octPts(R_OUTER));
+      outer.setAttribute('fill', '#2563EB');
+      outer.setAttribute('stroke', '#1d4ed8');
+      outer.setAttribute('stroke-width', '1');
+      outer.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(outer);
+
+      // Inner cutout
+      const inner = document.createElementNS(SVG_NS, 'circle');
+      inner.setAttribute('cx', CX); inner.setAttribute('cy', CY);
+      inner.setAttribute('r', R_INNER);
+      inner.setAttribute('fill', '#F2F5F9');
+      svg.appendChild(inner);
+
+      // Inner edge border
+      const innerEdge = document.createElementNS(SVG_NS, 'polygon');
+      innerEdge.setAttribute('points', octPts(R_INNER + 4));
+      innerEdge.setAttribute('fill', 'none');
+      innerEdge.setAttribute('stroke', '#1d4ed8');
+      innerEdge.setAttribute('stroke-width', '1.5');
+      innerEdge.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(innerEdge);
+
+      // Number nodes on ring
+      for (let i = 0; i < 8; i++) {
+        const mid = vtx(i + 0.5, (R_OUTER + R_INNER) / 2);
+        const c = document.createElementNS(SVG_NS, 'circle');
+        c.setAttribute('cx', mid.x); c.setAttribute('cy', mid.y);
+        c.setAttribute('r', '16'); c.setAttribute('fill', '#1d4ed8');
+        svg.appendChild(c);
+        const t = document.createElementNS(SVG_NS, 'text');
+        t.setAttribute('x', mid.x); t.setAttribute('y', mid.y + 1);
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('dominant-baseline', 'middle');
+        t.setAttribute('font-size', '11'); t.setAttribute('font-weight', '900');
+        t.setAttribute('fill', 'white');
+        t.setAttribute('font-family', 'system-ui, sans-serif');
+        t.setAttribute('pointer-events', 'none');
+        t.textContent = i + 1;
+        svg.appendChild(t);
+      }
+
+      // Center label
+      const ct = document.createElementNS(SVG_NS, 'text');
+      ct.setAttribute('x', CX); ct.setAttribute('y', CY - 7);
+      ct.setAttribute('text-anchor', 'middle'); ct.setAttribute('dominant-baseline', 'middle');
+      ct.setAttribute('font-size', '13'); ct.setAttribute('font-weight', '900');
+      ct.setAttribute('fill', '#1e40af'); ct.setAttribute('font-family', 'system-ui, sans-serif');
+      ct.setAttribute('pointer-events', 'none');
+      ct.textContent = 'OCTALYSIS';
+      svg.appendChild(ct);
+
+      const cs = document.createElementNS(SVG_NS, 'text');
+      cs.setAttribute('x', CX); cs.setAttribute('y', CY + 13);
+      cs.setAttribute('text-anchor', 'middle'); cs.setAttribute('dominant-baseline', 'middle');
+      cs.setAttribute('font-size', '9'); cs.setAttribute('fill', '#93c5fd');
+      cs.setAttribute('font-family', 'system-ui, sans-serif');
+      cs.setAttribute('pointer-events', 'none');
+      cs.textContent = 'Yu-kai Chou';
+      svg.appendChild(cs);
+    })();
   </script>
 </body>
 </html>
