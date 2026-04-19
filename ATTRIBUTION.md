@@ -36,10 +36,10 @@ If you are Yu-kai Chou or an authorized representative of the Octalysis Group an
 - A link added or improved,
 - Or this repository taken down,
 
-please open a GitHub issue on this repo or email the maintainer. We'll respond promptly and make changes in good faith.
+please open a GitHub issue on this repo. We'll respond promptly and make changes in good faith.
 
 ## License scope recap
 
-- **The framework concepts**: © Yu-kai Chou. Used here under educational fair use with credit.
+- **The framework concepts**: © Yu-kai Chou. Used here with attribution for educational purposes.
 - **This repo's original code, prose, and structure**: MIT License. Reuse freely with attribution to this repo.
 - **Brand names, product names, and logos referenced as examples** (Duolingo, GitHub, Minecraft, etc.): belong to their respective owners and are used for illustrative purposes only.

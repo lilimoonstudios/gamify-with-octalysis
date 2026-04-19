@@ -4,6 +4,8 @@ An open, practitioner-friendly reference for the **Octalysis Gamification Framew
 
 This project is an **independent educational summary**. It is not endorsed by or affiliated with Yu-kai Chou or the Octalysis Group. All framework concepts belong to Yu-kai. See [ATTRIBUTION.md](./ATTRIBUTION.md) for full credit and linking guidance.
 
+> **Status:** The site, skills, and article drafts described below are being scaffolded. Remove this notice when all content is in place.
+
 ---
 
 ## What's inside
@@ -90,7 +92,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md). Welcome contributions:
 - **Code** (HTML/CSS/JS): [MIT License](./LICENSE)
 - **Content** (skill markdown, article drafts, site copy): free to reuse with attribution — see [ATTRIBUTION.md](./ATTRIBUTION.md)
 
-All Octalysis Framework concepts, language, and structure belong to Yu-kai Chou and are used here under educational fair use with attribution. If you are Yu-kai or a representative and would like anything changed, please open an issue.
+All Octalysis Framework concepts, language, and structure belong to Yu-kai Chou and are used here with attribution for educational purposes. If you are Yu-kai or a representative and would like anything changed, please open an issue.
 
 ## Credits
 

@@ -20,9 +20,9 @@ Thanks for considering a contribution. This project is small and the bar is frie
 
 **Small edits** (typos, a link, a sentence): open a PR directly.
 
-**New examples or content**: open an issue first. Describe what you want to add and which drive it belongs to. We'll discuss before you invest too much time.
+**New examples or content**: [open an issue](https://github.com/LiliJulian/gamify-with-octalysis/issues) first. Describe what you want to add and which drive it belongs to. We'll discuss before you invest too much time.
 
-**New skills**: open an issue first. A new skill needs a clear trigger, clear inputs, clear output format, and a worked example. See any skill in `skills/` for the structure.
+**New skills**: [open an issue](https://github.com/LiliJulian/gamify-with-octalysis/issues) first. A new skill needs a clear trigger, clear inputs, clear output format, and a worked example. See any skill in `skills/` for the structure.
 
 ## Voice and style
 
