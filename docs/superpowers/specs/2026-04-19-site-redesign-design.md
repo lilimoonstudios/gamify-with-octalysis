@@ -49,6 +49,23 @@ Both pages share a nav that links between them. Users self-select based on their
 
 ---
 
+## Full Technique Library (Yu-kai Chou Official Diagram)
+
+Each drive card on the Learn page renders all its techniques as chips. ~48 techniques total across 8 drives.
+
+| Drive | Techniques |
+|-------|-----------|
+| CD1 Epic Meaning | Narrative / Storytelling, Elitism, World-Defining, Beginners Luck, Free Lunch, Humanity Hero, Co-Creator, Inspiring Meaning |
+| CD2 Accomplishment | Points, Badges, Leaderboard, Progress Bar, Quest Lists, Boss Fights, Certificates, High-Five, Achievement Symbols |
+| CD3 Creativity | Milestone Unlocks, Choice Perception, Instant Feedback, Boosters, Plant & Predict, Attribute Combo, Build From Scratch |
+| CD4 Ownership | Virtual Goods, Virtual Currency, Build to Give, Collection Set, Protection & Preservation, Territory Takeover, Alfred Effect |
+| CD5 Social | Social Treasure / Gifting, Friending, Conformity Anchor, Group Quest, Social Prod, Mentorship, Totem / Trophy Shelf |
+| CD6 Scarcity | Dangling / Dangling Carrot, Appointment Dynamics, Fixed Intervals, Lottery, Morning Star Bonus, Last Mile Drive, Magnetic Cap |
+| CD7 Curiosity | Glowing Choice, Mini Quests, Visual Storytelling, Easter Eggs, Random Rewards, Rolling Rewards, Sudden Rewards, Evolved UI |
+| CD8 Loss Avoidance | Progress Loss, Status Quo Sloth, Sunk Cost Prison, Rightful Heritage, Countdown Timer, FOMO Punch, Streaks |
+
+---
+
 ## Learn Page (`index.html`)
 
 ### Navigation
@@ -58,8 +75,14 @@ Both pages share a nav that links between them. Users self-select based on their
 - Right: `🎮 Playground` dark pill button (links to `/playground.html`)
 
 ### Hero Section
-- Two-column layout: text left, octagon SVG right
-- Gradient title: `The Octalysis Framework` with multi-color gradient on "Octalysis"
+- **Spoke-wheel octagon** centered in the hero
+  - Blue monochrome hollow ring (`#2563EB` outer polygon, white cutout circle inside)
+  - 8 numbered circle nodes at midpoints of each ring segment, filled `#2563EB` with white number
+  - Dashed spoke lines radiating from the ring vertices to card positions (8 compass directions)
+  - White cards at spoke endpoints: number circle + drive icon + CD label + drive name + 1-sentence description
+  - Center label: "OCTALYSIS / Yu-kai Chou"
+  - Clicking a card (or its spoke node) scrolls smoothly to that drive's deep-dive section
+- Gradient title above the octagon: `The Octalysis Framework` with gradient on "Octalysis"
 - Subtitle: one sentence value prop
 - No CTA buttons — the scroll is the journey
 
@@ -73,7 +96,12 @@ Both pages share a nav that links between them. Users self-select based on their
 - One card per drive, full editorial treatment
 - **Card anatomy:**
   - Header: colored left border (4px), CD badge (colored pill), drive name (800 weight), hat + brain inline tags, icon right-aligned
-  - Body: description paragraph, 2×2 examples grid (product + technique chip + body text), techniques row, designer tip callout
+  - Body:
+    - Description paragraph
+    - **6 product examples** in a 3-column grid (product name, technique chip, short description)
+    - **UI technique demo panels** — dark-background panels showing the technique as a mini UI widget (3–6 demos per drive)
+    - **All technique chips** for this drive in a scrolling chip row (8–13 per drive, from the full technique library)
+    - Designer tip callout
 - Sticky octagon sidebar (right column, `position: sticky`) — click segment to jump to that drive's card, highlights active drive as you scroll
 - Hat and Brain axes removed as separate page sections — fully replaced by inline tags
 
