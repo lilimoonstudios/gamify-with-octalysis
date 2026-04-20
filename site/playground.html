@@ -6,17 +6,149 @@
   <title>Octalysis Playground — Experience the Drives</title>
   <style>
     :root {
-      --bg: #0d1117; --surface: #161b22; --border: #30363d;
-      --text: #e6edf3; --muted: #8b949e; --dim: #6b7280;
+      --bg:#0d1117; --surface:#161b22; --border:#30363d;
+      --text:#e6edf3; --muted:#8b949e; --dim:#6b7280;
       --cd1:#F59E0B; --cd2:#3B82F6; --cd3:#8B5CF6; --cd4:#10B981;
       --cd5:#EC4899; --cd6:#F97316; --cd7:#06B6D4; --cd8:#EF4444;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; }
+
+    /* NAV */
+    .pg-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 32px; background: var(--surface); position: sticky;
+      top: 0; z-index: 300; border-bottom: 1px solid var(--border);
+    }
+    .pg-nav-logo {
+      font-size: .7rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: #a78bfa; background: #1a0d3f;
+      border: 1px solid #6d28d9; border-radius: 20px; padding: 5px 14px;
+      text-decoration: none;
+    }
+    .pg-nav-right { display: flex; align-items: center; gap: 12px; }
+    .pg-nav-learn {
+      font-size: .75rem; font-weight: 700; padding: 6px 14px;
+      border-radius: 20px; background: #fff; color: #111;
+      border: 1px solid #E5E7EB; text-decoration: none;
+    }
+    .pg-nav-learn:hover { background: #f9fafb; }
+    .pg-nav-active { font-size: .8rem; font-weight: 700; color: var(--muted); }
+
+    /* HERO */
+    .pg-hero {
+      text-align: center; padding: 56px 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pg-hero h1 {
+      font-size: 2.2rem; font-weight: 900; letter-spacing: -.04em;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .pg-hero p { font-size: .98rem; color: var(--muted); max-width: 480px; margin: 0 auto; }
+
+    /* 3-PANEL HUB */
+    .hub {
+      max-width: 1280px; margin: 0 auto; padding: 48px 24px 64px;
+      display: grid; grid-template-columns: 1fr 320px 1fr; gap: 32px;
+      align-items: start;
+    }
+    .hub-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; min-height: 400px;
+    }
+    .hub-panel-label {
+      font-size: .65rem; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: var(--dim); margin-bottom: 16px;
+    }
+
+    /* Octagon hub */
+    .hub-oct-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    #pg-oct-svg { width: 280px; height: 280px; cursor: pointer; }
+    .hub-oct-hint { font-size: .72rem; color: var(--dim); text-align: center; }
+
+    /* Desc panel (left) */
+    .desc-cd-num { font-size: 2rem; font-weight: 900; margin-bottom: 4px; }
+    .desc-drive-name { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+    .desc-body { font-size: .88rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .desc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .desc-tag {
+      font-size: .62rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 8px; border: 1px solid var(--border); color: var(--muted);
+    }
+    .desc-read-link { font-size: .8rem; font-weight: 600; color: #58a6ff; text-decoration: none; }
+    .desc-read-link:hover { text-decoration: underline; }
+    .desc-empty { color: var(--dim); font-size: .9rem; margin-top: 60px; text-align: center; }
+
+    /* Demo panel (right) */
+    .demo-title { font-size: .95rem; font-weight: 800; color: var(--text); margin-bottom: 16px; }
+    .demo-empty { color: var(--dim); font-size: .9rem; margin-top: 60px; text-align: center; }
+
+    /* Fade-in animation */
+    .panel-content { opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s; }
+    .panel-content.visible { opacity: 1; transform: translateY(0); }
+
+    /* FOOTER */
+    .pg-footer {
+      text-align: center; padding: 24px; border-top: 1px solid var(--border);
+      font-size: .82rem; color: var(--dim);
+    }
+    .pg-footer a { color: #58a6ff; text-decoration: none; }
+    .pg-footer a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hub { grid-template-columns: 1fr; }
+      #pg-oct-svg { width: 220px; height: 220px; }
+    }
   </style>
 </head>
 <body>
-  <p style="color:#8b949e;padding:40px;text-align:center">Playground — coming soon</p>
+
+<nav class="pg-nav">
+  <a href="index.html" class="pg-nav-logo">Octalysis</a>
+  <div class="pg-nav-right">
+    <a href="index.html" class="pg-nav-learn">📖 Learn</a>
+    <span class="pg-nav-active">🎮 Playground</span>
+  </div>
+</nav>
+
+<section class="pg-hero">
+  <h1>Experience the Drives</h1>
+  <p>Click a segment on the octagon to activate a drive demo.</p>
+</section>
+
+<div class="hub">
+  <!-- Left: Description -->
+  <div class="hub-panel" id="desc-panel">
+    <div class="hub-panel-label">Framework Item</div>
+    <div id="desc-content" class="panel-content">
+      <div class="desc-empty">← Select a drive to explore</div>
+    </div>
+  </div>
+
+  <!-- Center: Octagon -->
+  <div class="hub-oct-wrap">
+    <svg id="pg-oct-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="hub-oct-hint" id="oct-hint">Click a drive segment</div>
+  </div>
+
+  <!-- Right: Demo -->
+  <div class="hub-panel" id="demo-panel">
+    <div class="hub-panel-label">Live Demo</div>
+    <div id="demo-content" class="panel-content">
+      <div class="demo-empty">← Select a drive to see a demo</div>
+    </div>
+  </div>
+</div>
+
+<footer class="pg-footer">
+  Octalysis Framework by <a href="https://yukaichou.com" target="_blank" rel="noopener">Yu-kai Chou</a> &nbsp;·&nbsp;
+  <a href="index.html">📖 Read the full framework →</a>
+</footer>
+
+<script>
+// Playground JS added in Tasks 8–12
+</script>
 </body>
 </html>
