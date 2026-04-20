@@ -307,9 +307,110 @@ function initDemo(cd) {
   if (inits[cd]) inits[cd]();
 }
 
-// ── Stub render/init functions (filled in later tasks) ───────────
-function renderMissionCounter() { return '<div class="demo-empty">CD1 demo coming soon</div>'; }
-function renderXPLevelUp()      { return '<div class="demo-empty">CD2 demo coming soon</div>'; }
+// ── CD1: Mission Counter ─────────────────────────────────────────
+function renderMissionCounter() {
+  return `
+  <div class="demo-title">Mission Counter</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d;text-align:center">
+    <div style="font-size:2.8rem;margin-bottom:8px">🌐</div>
+    <div style="font-size:.7rem;color:#6b7280;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px">Community Members</div>
+    <div id="mission-count" style="font-size:2.6rem;font-weight:900;color:#F59E0B;letter-spacing:-.03em;line-height:1">84,271</div>
+    <div style="font-size:.78rem;color:#8b949e;margin-top:6px">designers, developers &amp; educators</div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap">
+      <span style="font-size:.68rem;padding:3px 10px;border-radius:12px;background:#78350f;color:#fde68a;border:1px solid #92400e">🎨 Designers: 31,402</span>
+      <span style="font-size:.68rem;padding:3px 10px;border-radius:12px;background:#1e3a5f;color:#93c5fd;border:1px solid #1d4ed8">💻 Developers: 28,915</span>
+      <span style="font-size:.68rem;padding:3px 10px;border-radius:12px;background:#064e3b;color:#6ee7b7;border:1px solid #059669">📚 Educators: 23,954</span>
+    </div>
+    <button id="mission-btn" onclick="addVoice()" style="margin-top:16px;background:#F59E0B;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:.82rem;font-weight:700;cursor:pointer;transition:transform .15s">
+      + Add Your Voice
+    </button>
+  </div>`;
+}
+
+window.addVoice = function() {
+  const el = document.getElementById('mission-count');
+  if (!el) return;
+  const current = parseInt(el.textContent.replace(/,/g, ''), 10) + 1;
+  el.textContent = current.toLocaleString();
+  el.style.transform = 'scale(1.15)';
+  el.style.color = '#fff';
+  setTimeout(() => { el.style.transform = ''; el.style.color = '#F59E0B'; }, 300);
+};
+
+// ── CD2: XP Level-Up ─────────────────────────────────────────────
+function renderXPLevelUp() {
+  return `
+  <div class="demo-title">XP Level-Up</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d" id="xp-container">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div>
+        <div style="font-size:.65rem;color:#6b7280;text-transform:uppercase;letter-spacing:.7px">Current Level</div>
+        <div id="xp-level-name" style="font-size:1rem;font-weight:800;color:#e6edf3">Level 3 · Practitioner</div>
+      </div>
+      <div id="xp-badge" style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#1d4ed8,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 0 12px rgba(59,130,246,.3)">🏆</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#6b7280;margin-bottom:4px">
+      <span>XP Progress</span><span id="xp-label">680 / 1000</span>
+    </div>
+    <div style="height:10px;background:#21262d;border-radius:5px;overflow:hidden;margin-bottom:16px">
+      <div id="xp-bar" style="width:68%;height:100%;background:linear-gradient(90deg,#3B82F6,#8B5CF6);border-radius:5px;transition:width .4s ease;box-shadow:0 0 8px rgba(59,130,246,.5)"></div>
+    </div>
+    <div style="font-size:.75rem;font-weight:700;color:#8b949e;margin-bottom:8px">Complete tasks to earn XP:</div>
+    <div id="xp-tasks" style="display:flex;flex-direction:column;gap:6px">
+      <div class="xp-task" data-xp="120" onclick="earnXP(this)" style="display:flex;align-items:center;justify-content:space-between;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 12px;cursor:pointer;transition:border-color .15s">
+        <span style="font-size:.78rem;color:#e6edf3">📝 Write a design brief</span>
+        <span style="font-size:.68rem;font-weight:700;color:#3B82F6">+120 XP</span>
+      </div>
+      <div class="xp-task" data-xp="80" onclick="earnXP(this)" style="display:flex;align-items:center;justify-content:space-between;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 12px;cursor:pointer;transition:border-color .15s">
+        <span style="font-size:.78rem;color:#e6edf3">💬 Give feedback to a peer</span>
+        <span style="font-size:.68rem;font-weight:700;color:#3B82F6">+80 XP</span>
+      </div>
+      <div class="xp-task" data-xp="200" onclick="earnXP(this)" style="display:flex;align-items:center;justify-content:space-between;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 12px;cursor:pointer;transition:border-color .15s">
+        <span style="font-size:.78rem;color:#e6edf3">🚀 Ship a prototype</span>
+        <span style="font-size:.68rem;font-weight:700;color:#3B82F6">+200 XP</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+let xpCurrent = 680;
+const xpMax = 1000;
+
+window.earnXP = function(el) {
+  if (el.dataset.done) return;
+  el.dataset.done = '1';
+  el.style.opacity = '.5';
+  el.style.pointerEvents = 'none';
+  el.querySelector('span:last-child').textContent = '✓ Done';
+
+  const gain = parseInt(el.dataset.xp, 10);
+  xpCurrent = Math.min(xpCurrent + gain, xpMax);
+
+  const barEl = document.getElementById('xp-bar');
+  const labelEl = document.getElementById('xp-label');
+  if (barEl) barEl.style.width = (xpCurrent / xpMax * 100) + '%';
+  if (labelEl) labelEl.textContent = `${xpCurrent} / ${xpMax}`;
+
+  if (xpCurrent >= xpMax) {
+    const container = document.getElementById('xp-container');
+    if (container) {
+      container.style.background = 'linear-gradient(135deg,#1a0d3f,#0d2137)';
+      container.style.borderColor = '#8B5CF6';
+    }
+    const lvlEl = document.getElementById('xp-level-name');
+    if (lvlEl) lvlEl.textContent = 'Level 4 · Expert';
+    const badge = document.getElementById('xp-badge');
+    if (badge) {
+      badge.style.background = 'linear-gradient(135deg,#7c3aed,#ec4899)';
+      badge.style.boxShadow = '0 0 20px rgba(139,92,246,.6)';
+      badge.textContent = '⭐';
+    }
+  }
+};
+
+function initXPLevelUp() { xpCurrent = 680; }
+
+// ── Stub render/init functions for CD3–CD8 (filled in later tasks) ──
 function renderComboBuilder()   { return '<div class="demo-empty">CD3 demo coming soon</div>'; }
 function renderPassportStamps() { return '<div class="demo-empty">CD4 demo coming soon</div>'; }
 function renderLivePulse()      { return '<div class="demo-empty">CD5 demo coming soon</div>'; }
@@ -317,7 +418,6 @@ function renderEventTicket()    { return '<div class="demo-empty">CD6 demo comin
 function renderScratchCard()    { return '<div class="demo-empty">CD7 demo coming soon</div>'; }
 function renderStreakTracker()  { return '<div class="demo-empty">CD8 demo coming soon</div>'; }
 
-function initXPLevelUp()     {}
 function initComboBuilder()  {}
 function initPassportStamps(){}
 function initLivePulse()     {}
