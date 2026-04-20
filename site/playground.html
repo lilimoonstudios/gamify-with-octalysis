@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Octalysis Playground — Experience the Drives</title>
+  <style>
+    :root {
+      --bg:#0d1117; --surface:#161b22; --border:#30363d;
+      --text:#e6edf3; --muted:#8b949e; --dim:#6b7280;
+      --cd1:#F59E0B; --cd2:#3B82F6; --cd3:#8B5CF6; --cd4:#10B981;
+      --cd5:#EC4899; --cd6:#F97316; --cd7:#06B6D4; --cd8:#EF4444;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; }
+
+    /* NAV */
+    .pg-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 32px; background: var(--surface); position: sticky;
+      top: 0; z-index: 300; border-bottom: 1px solid var(--border);
+    }
+    .pg-nav-logo {
+      font-size: .7rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: #a78bfa; background: #1a0d3f;
+      border: 1px solid #6d28d9; border-radius: 20px; padding: 5px 14px;
+      text-decoration: none;
+    }
+    .pg-nav-right { display: flex; align-items: center; gap: 12px; }
+    .pg-nav-learn {
+      font-size: .75rem; font-weight: 700; padding: 6px 14px;
+      border-radius: 20px; background: #fff; color: #111;
+      border: 1px solid #E5E7EB; text-decoration: none;
+    }
+    .pg-nav-learn:hover { background: #f9fafb; }
+    .pg-nav-active { font-size: .8rem; font-weight: 700; color: var(--muted); }
+
+    /* HERO */
+    .pg-hero {
+      text-align: center; padding: 56px 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pg-hero h1 {
+      font-size: 2.2rem; font-weight: 900; letter-spacing: -.04em;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .pg-hero p { font-size: .98rem; color: var(--muted); max-width: 480px; margin: 0 auto; }
+
+    /* 3-PANEL HUB */
+    .hub {
+      max-width: 1280px; margin: 0 auto; padding: 48px 24px 64px;
+      display: grid; grid-template-columns: 1fr 320px 1fr; gap: 32px;
+      align-items: start;
+    }
+    .hub-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; min-height: 400px;
+    }
+    .hub-panel-label {
+      font-size: .65rem; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: var(--dim); margin-bottom: 16px;
+    }
+
+    /* Octagon hub */
+    .hub-oct-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    #pg-oct-svg { width: 280px; height: 280px; cursor: pointer; }
+    .hub-oct-hint { font-size: .72rem; color: var(--dim); text-align: center; }
+
+    /* Desc panel (left) */
+    .desc-cd-num { font-size: 2rem; font-weight: 900; margin-bottom: 4px; }
+    .desc-drive-name { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 12px; }
+    .desc-body { font-size: .88rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .desc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+    .desc-tag {
+      font-size: .62rem; font-weight: 700; padding: 3px 8px;
+      border-radius: 8px; border: 1px solid var(--border); color: var(--muted);
+    }
+    .desc-read-link { font-size: .8rem; font-weight: 600; color: #58a6ff; text-decoration: none; }
+    .desc-read-link:hover { text-decoration: underline; }
+    .desc-empty { color: var(--dim); font-size: .9rem; margin-top: 60px; text-align: center; }
+
+    /* Demo panel (right) */
+    .demo-title { font-size: .95rem; font-weight: 800; color: var(--text); margin-bottom: 16px; }
+    .demo-empty { color: var(--dim); font-size: .9rem; margin-top: 60px; text-align: center; }
+
+    /* Fade-in animation */
+    .panel-content { opacity: 0; transform: translateY(6px); transition: opacity .3s, transform .3s; }
+    .panel-content.visible { opacity: 1; transform: translateY(0); }
+
+    /* FOOTER */
+    .pg-footer {
+      text-align: center; padding: 24px; border-top: 1px solid var(--border);
+      font-size: .82rem; color: var(--dim);
+    }
+    .pg-footer a { color: #58a6ff; text-decoration: none; }
+    .pg-footer a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hub { grid-template-columns: 1fr; }
+      #pg-oct-svg { width: 220px; height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="pg-nav">
+  <a href="index.html" class="pg-nav-logo">Octalysis</a>
+  <div class="pg-nav-right">
+    <a href="index.html" class="pg-nav-learn">📖 Learn</a>
+    <span class="pg-nav-active">🎮 Playground</span>
+  </div>
+</nav>
+
+<section class="pg-hero">
+  <h1>Experience the Drives</h1>
+  <p>Click a segment on the octagon to activate a drive demo.</p>
+</section>
+
+<div class="hub">
+  <!-- Left: Description -->
+  <div class="hub-panel" id="desc-panel">
+    <div class="hub-panel-label">Framework Item</div>
+    <div id="desc-content" class="panel-content">
+      <div class="desc-empty">← Select a drive to explore</div>
+    </div>
+  </div>
+
+  <!-- Center: Octagon -->
+  <div class="hub-oct-wrap">
+    <svg id="pg-oct-svg" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="hub-oct-hint" id="oct-hint">Click a drive segment</div>
+  </div>
+
+  <!-- Right: Demo -->
+  <div class="hub-panel" id="demo-panel">
+    <div class="hub-panel-label">Live Demo</div>
+    <div id="demo-content" class="panel-content">
+      <div class="demo-empty">← Select a drive to see a demo</div>
+    </div>
+  </div>
+</div>
+
+<footer class="pg-footer">
+  Octalysis Framework by <a href="https://yukaichou.com" target="_blank" rel="noopener">Yu-kai Chou</a> &nbsp;·&nbsp;
+  <a href="index.html">📖 Read the full framework →</a>
+</footer>
+
+<script>
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const DRIVES = [
+  { cd:1, name:'Epic Meaning & Calling',      icon:'🌐', color:'#F59E0B',
+    hat:'⬜ White Hat', brain:'🧠 Right Brain',
+    desc:'The belief that you are doing something greater than yourself. When users feel chosen for a mission, effort becomes purposeful.',
+    demoId:'demo-cd1' },
+  { cd:2, name:'Development & Accomplishment', icon:'🏆', color:'#3B82F6',
+    hat:'⬜ White Hat', brain:'🔢 Left Brain',
+    desc:'The internal drive to progress, develop skills, and overcome challenges. Progress bars and XP make invisible growth visible.',
+    demoId:'demo-cd2' },
+  { cd:3, name:'Empowerment of Creativity',    icon:'🧩', color:'#8B5CF6',
+    hat:'⬜ White Hat', brain:'🧠 Right Brain',
+    desc:'The drive to try new combinations and get meaningful feedback. When every choice leads to a unique outcome, creativity loops become addictive.',
+    demoId:'demo-cd3' },
+  { cd:4, name:'Ownership & Possession',       icon:'📦', color:'#10B981',
+    hat:'⬜ White Hat', brain:'🔢 Left Brain',
+    desc:'The drive to accumulate and protect things you own. Collection, virtual currency, and customisation trigger this drive deeply.',
+    demoId:'demo-cd4' },
+  { cd:5, name:'Social Influence & Relatedness', icon:'👥', color:'#EC4899',
+    hat:'⬜ White Hat', brain:'🧠 Right Brain',
+    desc:'The drive to collaborate, compete, and belong. Seeing what peers do creates social benchmarking and conformity pressure.',
+    demoId:'demo-cd5' },
+  { cd:6, name:'Scarcity & Impatience',        icon:'⏳', color:'#F97316',
+    hat:'⬛ Black Hat', brain:'🔢 Left Brain',
+    desc:'Wanting something more because you cannot have it yet. Countdown timers and limited availability create urgent desire.',
+    demoId:'demo-cd6' },
+  { cd:7, name:'Unpredictability & Curiosity', icon:'🎲', color:'#06B6D4',
+    hat:'⬛ Black Hat', brain:'🧠 Right Brain',
+    desc:'Not knowing what comes next keeps the brain engaged. Variable rewards and hidden surprises create compulsive curiosity.',
+    demoId:'demo-cd7' },
+  { cd:8, name:'Loss & Avoidance',             icon:'🚩', color:'#EF4444',
+    hat:'⬛ Black Hat', brain:'🔢 Left Brain',
+    desc:'The drive to avoid losing what you already have. Streaks at risk, expiring progress, and FOMO are powerful motivators.',
+    demoId:'demo-cd8' }
+];
+
+let activeCd = null;
+
+// ── Build playground octagon ────────────────────────────────────
+const pgSvg = document.getElementById('pg-oct-svg');
+const CX = 140, CY = 140, R = 110;
+
+function vtx(i, r) {
+  const a = (-90 + i * 45) * Math.PI / 180;
+  return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
+}
+
+const segments = [];
+
+DRIVES.forEach((d, i) => {
+  const va = vtx(i, R), vb = vtx(i + 1, R);
+  const poly = document.createElementNS(SVG_NS, 'polygon');
+  poly.setAttribute('points', `${CX},${CY} ${va.x},${va.y} ${vb.x},${vb.y}`);
+  poly.setAttribute('fill', d.color);
+  poly.setAttribute('opacity', '0.2');
+  poly.setAttribute('stroke', '#0d1117');
+  poly.setAttribute('stroke-width', '2');
+  poly.style.cursor = 'pointer';
+  poly.style.transition = 'opacity .2s';
+  pgSvg.appendChild(poly);
+  segments.push(poly);
+
+  // Hover
+  poly.addEventListener('mouseenter', () => {
+    if (activeCd !== d.cd) poly.setAttribute('opacity', '0.7');
+    document.getElementById('oct-hint').textContent = d.name;
+  });
+  poly.addEventListener('mouseleave', () => {
+    if (activeCd !== d.cd) poly.setAttribute('opacity', '0.2');
+    document.getElementById('oct-hint').textContent = activeCd ? DRIVES[activeCd-1].name : 'Click a drive segment';
+  });
+  poly.addEventListener('click', () => activateDrive(d.cd));
+});
+
+// Center circle
+const cc = document.createElementNS(SVG_NS, 'circle');
+cc.setAttribute('cx', CX); cc.setAttribute('cy', CY);
+cc.setAttribute('r', '36'); cc.setAttribute('fill', '#161b22');
+cc.setAttribute('stroke', '#30363d'); cc.setAttribute('stroke-width', '1.5');
+pgSvg.appendChild(cc);
+const ct = document.createElementNS(SVG_NS, 'text');
+ct.setAttribute('x', CX); ct.setAttribute('y', CY - 4);
+ct.setAttribute('text-anchor', 'middle'); ct.setAttribute('dominant-baseline', 'middle');
+ct.setAttribute('font-size', '8'); ct.setAttribute('font-weight', '900');
+ct.setAttribute('fill', '#8b949e'); ct.setAttribute('font-family', 'system-ui, sans-serif');
+ct.setAttribute('pointer-events', 'none'); ct.textContent = 'CLICK';
+pgSvg.appendChild(ct);
+
+// ── Activate a drive ────────────────────────────────────────────
+function activateDrive(cd) {
+  if (pulseInterval) { clearInterval(pulseInterval); pulseInterval = null; }
+  if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+  activeCd = cd;
+  const d = DRIVES[cd - 1];
+
+  // Update segment opacities
+  segments.forEach((p, i) => {
+    const isActive = i === cd - 1;
+    p.setAttribute('opacity', isActive ? '1' : '0.15');
+    if (isActive) {
+      p.style.filter = `drop-shadow(0 0 8px ${d.color})`;
+    } else {
+      p.style.filter = '';
+    }
+  });
+  ct.textContent = `CD${cd}`;
+
+  // Render description panel
+  const descEl = document.getElementById('desc-content');
+  descEl.classList.remove('visible');
+  descEl.innerHTML = `
+    <div class="desc-cd-num" style="color:${d.color}">CD${cd}</div>
+    <div class="desc-drive-name">${d.icon} ${d.name}</div>
+    <p class="desc-body">${d.desc}</p>
+    <div class="desc-tags">
+      <span class="desc-tag">${d.hat}</span>
+      <span class="desc-tag">${d.brain}</span>
+    </div>
+    <a href="index.html#drive-${cd}" class="desc-read-link">→ Read full description</a>
+  `;
+  requestAnimationFrame(() => descEl.classList.add('visible'));
+
+  // Render demo panel
+  const demoEl = document.getElementById('demo-content');
+  demoEl.classList.remove('visible');
+  demoEl.innerHTML = renderDemo(cd);
+  requestAnimationFrame(() => {
+    demoEl.classList.add('visible');
+    initDemo(cd);
+  });
+}
+
+// ── Demo renderer (returns HTML string) ─────────────────────────
+function renderDemo(cd) {
+  const demos = {
+    1: renderMissionCounter,
+    2: renderXPLevelUp,
+    3: renderComboBuilder,
+    4: renderPassportStamps,
+    5: renderLivePulse,
+    6: renderEventTicket,
+    7: renderScratchCard,
+    8: renderStreakTracker,
+  };
+  return demos[cd] ? demos[cd]() : '<div class="demo-empty">Demo coming soon</div>';
+}
+
+function initDemo(cd) {
+  const inits = {
+    1: () => {},
+    2: initXPLevelUp,
+    3: initComboBuilder,
+    4: initPassportStamps,
+    5: initLivePulse,
+    6: initEventTicket,
+    7: initScratchCard,
+    8: initStreakTracker,
+  };
+  if (inits[cd]) inits[cd]();
+}
+
+// ── CD1: Mission Counter ─────────────────────────────────────────
+function renderMissionCounter() {
+  return `
+  <div class="demo-title">Mission Counter</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d;text-align:center">
+    <div style="font-size:2.8rem;margin-bottom:8px">🌐</div>
+    <div style="font-size:.7rem;color:#6b7280;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px">Community Members</div>
+    <div id="mission-count" style="font-size:2.6rem;font-weight:900;color:#F59E0B;letter-spacing:-.03em;line-height:1">84,271</div>
+    <div style="font-size:.78rem;color:#8b949e;margin-top:6px">designers, developers &amp; educators</div>
+    <div style="display:flex;justify-content:center;gap:8px;margin-top:16px;flex-wrap:wrap">
+      <span style="font-size:.68rem;padding:3px 10px;border-radius:12px;background:#78350f;color:#fde68a;border:1px solid #92400e">🎨 Designers: 31,402</span>
+      <span style="font-size:.68rem;padding:3px 10px;border-radius:12px;background:#1e3a5f;color:#93c5fd;border:1px solid #1d4ed8">💻 Developers: 28,915</span>
+      <span style="font-size:.68rem;padding:3px 10px;border-radius:12px;background:#064e3b;color:#6ee7b7;border:1px solid #059669">📚 Educators: 23,954</span>
+    </div>
+    <button id="mission-btn" onclick="addVoice()" style="margin-top:16px;background:#F59E0B;color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:.82rem;font-weight:700;cursor:pointer;transition:transform .15s">
+      + Add Your Voice
+    </button>
+  </div>`;
+}
+
+window.addVoice = function() {
+  const el = document.getElementById('mission-count');
+  if (!el) return;
+  const current = parseInt(el.textContent.replace(/,/g, ''), 10) + 1;
+  el.textContent = current.toLocaleString();
+  el.style.transform = 'scale(1.15)';
+  el.style.color = '#fff';
+  setTimeout(() => { el.style.transform = ''; el.style.color = '#F59E0B'; }, 300);
+};
+
+// ── CD2: XP Level-Up ─────────────────────────────────────────────
+function renderXPLevelUp() {
+  return `
+  <div class="demo-title">XP Level-Up</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d" id="xp-container">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div>
+        <div style="font-size:.65rem;color:#6b7280;text-transform:uppercase;letter-spacing:.7px">Current Level</div>
+        <div id="xp-level-name" style="font-size:1rem;font-weight:800;color:#e6edf3">Level 3 · Practitioner</div>
+      </div>
+      <div id="xp-badge" style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#1d4ed8,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 0 12px rgba(59,130,246,.3)">🏆</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#6b7280;margin-bottom:4px">
+      <span>XP Progress</span><span id="xp-label">680 / 1000</span>
+    </div>
+    <div style="height:10px;background:#21262d;border-radius:5px;overflow:hidden;margin-bottom:16px">
+      <div id="xp-bar" style="width:68%;height:100%;background:linear-gradient(90deg,#3B82F6,#8B5CF6);border-radius:5px;transition:width .4s ease;box-shadow:0 0 8px rgba(59,130,246,.5)"></div>
+    </div>
+    <div style="font-size:.75rem;font-weight:700;color:#8b949e;margin-bottom:8px">Complete tasks to earn XP:</div>
+    <div id="xp-tasks" style="display:flex;flex-direction:column;gap:6px">
+      <div class="xp-task" data-xp="120" onclick="earnXP(this)" style="display:flex;align-items:center;justify-content:space-between;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 12px;cursor:pointer;transition:border-color .15s">
+        <span style="font-size:.78rem;color:#e6edf3">📝 Write a design brief</span>
+        <span style="font-size:.68rem;font-weight:700;color:#3B82F6">+120 XP</span>
+      </div>
+      <div class="xp-task" data-xp="80" onclick="earnXP(this)" style="display:flex;align-items:center;justify-content:space-between;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 12px;cursor:pointer;transition:border-color .15s">
+        <span style="font-size:.78rem;color:#e6edf3">💬 Give feedback to a peer</span>
+        <span style="font-size:.68rem;font-weight:700;color:#3B82F6">+80 XP</span>
+      </div>
+      <div class="xp-task" data-xp="200" onclick="earnXP(this)" style="display:flex;align-items:center;justify-content:space-between;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 12px;cursor:pointer;transition:border-color .15s">
+        <span style="font-size:.78rem;color:#e6edf3">🚀 Ship a prototype</span>
+        <span style="font-size:.68rem;font-weight:700;color:#3B82F6">+200 XP</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+let xpCurrent = 680;
+const xpMax = 1000;
+
+window.earnXP = function(el) {
+  if (el.dataset.done) return;
+  el.dataset.done = '1';
+  el.style.opacity = '.5';
+  el.style.pointerEvents = 'none';
+  el.querySelector('span:last-child').textContent = '✓ Done';
+
+  const gain = parseInt(el.dataset.xp, 10);
+  xpCurrent = Math.min(xpCurrent + gain, xpMax);
+
+  const barEl = document.getElementById('xp-bar');
+  const labelEl = document.getElementById('xp-label');
+  if (barEl) barEl.style.width = (xpCurrent / xpMax * 100) + '%';
+  if (labelEl) labelEl.textContent = `${xpCurrent} / ${xpMax}`;
+
+  if (xpCurrent >= xpMax) {
+    const container = document.getElementById('xp-container');
+    if (container) {
+      container.style.background = 'linear-gradient(135deg,#1a0d3f,#0d2137)';
+      container.style.borderColor = '#8B5CF6';
+    }
+    const lvlEl = document.getElementById('xp-level-name');
+    if (lvlEl) lvlEl.textContent = 'Level 4 · Expert';
+    const badge = document.getElementById('xp-badge');
+    if (badge) {
+      badge.style.background = 'linear-gradient(135deg,#7c3aed,#ec4899)';
+      badge.style.boxShadow = '0 0 20px rgba(139,92,246,.6)';
+      badge.textContent = '⭐';
+    }
+  }
+};
+
+function initXPLevelUp() { xpCurrent = 680; }
+
+// ── CD3: Combo Builder ────────────────────────────────────────
+const COMBO_TAGS = ['Progress Bar','Streak','Badge','Leaderboard','Scratch Card','Countdown Timer','Boss Fight','Random Reward','Social Proof','Quest List','Stamp Collection','Narrative'];
+const COMBOS = {
+  'Progress Bar+Streak': {name:'The Habit Loop', effect:'Daily momentum builds automatic behaviour'},
+  'Badge+Leaderboard': {name:'The Status Race', effect:'Visible rank turns achievement into competition'},
+  'Scratch Card+Random Reward': {name:'Variable Surprise', effect:'Unpredictable payoff creates compulsive checking'},
+  'Countdown Timer+Leaderboard': {name:'Rush Hour', effect:'Urgency + rank creates peak engagement spikes'},
+  'Boss Fight+Progress Bar': {name:'Final Push', effect:'Visible endpoint makes the hardest challenge feel winnable'},
+  'Narrative+Badge': {name:'Story Reward', effect:'Meaning-laden achievement deepens emotional investment'},
+};
+const COMBO_DEFAULT = {name:'Custom Combo', effect:'Pick 2–3 techniques to see their combined effect'};
+
+function renderComboBuilder() {
+  return `
+  <div class="demo-title">Combo Builder</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="font-size:.7rem;color:#6b7280;margin-bottom:10px">Pick 2–3 techniques:</div>
+    <div id="combo-tags" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+      ${COMBO_TAGS.map(t => `<button class="combo-tag-btn" data-tag="${t}" onclick="toggleComboTag(this)"
+        style="font-size:.72rem;padding:5px 12px;border-radius:20px;border:1.5px solid #30363d;background:#161b22;color:#8b949e;cursor:pointer;transition:all .15s">${t}</button>`).join('')}
+    </div>
+    <div id="combo-result" style="background:#161b22;border-radius:10px;padding:14px;border:1px solid #30363d;min-height:70px">
+      <div style="font-size:.68rem;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px">Combo Effect</div>
+      <div id="combo-name" style="font-size:.95rem;font-weight:800;color:#8B5CF6;margin-bottom:4px">—</div>
+      <div id="combo-effect" style="font-size:.8rem;color:#8b949e;line-height:1.5">Select techniques above</div>
+    </div>
+  </div>`;
+}
+
+const selectedTags = new Set();
+window.toggleComboTag = function(btn) {
+  const tag = btn.dataset.tag;
+  if (selectedTags.has(tag)) {
+    selectedTags.delete(tag);
+    btn.style.background = '#161b22'; btn.style.color = '#8b949e';
+    btn.style.borderColor = '#30363d';
+  } else {
+    if (selectedTags.size >= 3) return;
+    selectedTags.add(tag);
+    btn.style.background = '#1a0d3f'; btn.style.color = '#a78bfa';
+    btn.style.borderColor = '#8B5CF6';
+  }
+  updateComboResult();
+};
+
+function updateComboResult() {
+  const tags = [...selectedTags].sort();
+  const key = tags.slice(0,2).join('+');
+  const combo = COMBOS[key] || (selectedTags.size >= 2 ? COMBO_DEFAULT : null);
+  const nameEl = document.getElementById('combo-name');
+  const effectEl = document.getElementById('combo-effect');
+  if (!nameEl || !effectEl) return;
+  if (combo) {
+    nameEl.textContent = combo.name;
+    effectEl.textContent = combo.effect;
+  } else {
+    nameEl.textContent = '—';
+    effectEl.textContent = 'Select techniques above';
+  }
+}
+
+function initComboBuilder() { selectedTags.clear(); }
+
+// ── CD4: Passport Stamps ─────────────────────────────────────
+const STAMP_DRIVES = [
+  {cd:1,icon:'🌐',color:'#F59E0B',name:'Epic Meaning'},
+  {cd:2,icon:'🏆',color:'#3B82F6',name:'Accomplishment'},
+  {cd:3,icon:'🧩',color:'#8B5CF6',name:'Creativity'},
+  {cd:4,icon:'📦',color:'#10B981',name:'Ownership'},
+  {cd:5,icon:'👥',color:'#EC4899',name:'Social'},
+  {cd:6,icon:'⏳',color:'#F97316',name:'Scarcity'},
+  {cd:7,icon:'🎲',color:'#06B6D4',name:'Curiosity'},
+  {cd:8,icon:'🚩',color:'#EF4444',name:'Loss Avoid.'},
+];
+const STAMP_KEY = 'octalysis_stamps';
+
+function getStamps() {
+  try { return JSON.parse(localStorage.getItem(STAMP_KEY)) || []; } catch { return []; }
+}
+function saveStamps(arr) {
+  try { localStorage.setItem(STAMP_KEY, JSON.stringify(arr)); } catch {}
+}
+
+function renderPassportStamps() {
+  const claimed = getStamps();
+  const count = claimed.length;
+  const stamps = STAMP_DRIVES.map(d => {
+    const isClaimed = claimed.includes(d.cd);
+    return isClaimed
+      ? `<div class="stamp-item claimed" style="border:2px solid ${d.color};background:color-mix(in srgb,${d.color} 12%,#0d1117);box-shadow:0 0 10px color-mix(in srgb,${d.color} 30%,transparent);border-radius:8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:1.3rem;cursor:default">
+          ${d.icon}
+          <div style="font-size:.52rem;font-weight:800;color:${d.color}">${d.name}</div>
+         </div>`
+      : `<div onclick="claimStamp(${d.cd})" style="border:2px dashed #30363d;border-radius:8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:1.3rem;opacity:.4;cursor:pointer;transition:opacity .15s" onmouseenter="this.style.opacity='.7'" onmouseleave="this.style.opacity='.4'">
+          ${d.icon}
+          <div style="font-size:.52rem;color:#6b7280">${d.name}</div>
+         </div>`;
+  }).join('');
+
+  return `
+  <div class="demo-title">Passport Stamps</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="display:flex;justify-content:space-between;font-size:.7rem;color:#6b7280;margin-bottom:12px">
+      <span>Octalysis Passport</span>
+      <span id="stamp-count-label">${count}/8 collected</span>
+    </div>
+    <div id="stamps-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+      ${stamps}
+    </div>
+    <div style="height:4px;background:#21262d;border-radius:2px;overflow:hidden">
+      <div id="stamp-bar" style="width:${count/8*100}%;height:100%;background:linear-gradient(90deg,#10B981,#06B6D4);border-radius:2px;transition:width .4s"></div>
+    </div>
+    <div style="font-size:.65rem;color:#6b7280;margin-top:5px;text-align:center">Click unclaimed stamps to collect · Progress saved in browser</div>
+  </div>`;
+}
+
+window.claimStamp = function(cd) {
+  const claimed = getStamps();
+  if (!claimed.includes(cd)) {
+    claimed.push(cd);
+    saveStamps(claimed);
+  }
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) { demoEl.innerHTML = renderPassportStamps(); }
+};
+
+function initPassportStamps() {}
+
+// ── CD5: Live Pulse ──────────────────────────────────────────
+const PULSE_MSGS = [
+  '🎨 A designer in Berlin just earned Level 4',
+  '💻 12 developers are exploring CD7 right now',
+  '📚 An educator from Tokyo claimed their first stamp',
+  '🚀 3 people just completed the XP challenge',
+  '🌍 84 new members joined this week',
+  '🏆 Someone in São Paulo hit Expert tier',
+  '💡 15 designers are using the Combo Builder',
+  '🔥 A streak champion in Seoul: 42 days running',
+];
+let pulseInterval = null;
+
+function renderLivePulse() {
+  return `
+  <div class="demo-title">Live Pulse</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div style="width:8px;height:8px;border-radius:50%;background:#10B981;box-shadow:0 0 8px #10B981;animation:pulse-dot 1.5s infinite"></div>
+      <span style="font-size:.72rem;font-weight:700;color:#10B981">Live Activity</span>
+    </div>
+    <style>@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}</style>
+    <div id="pulse-feed" style="display:flex;flex-direction:column;gap:6px;max-height:200px;overflow:hidden"></div>
+  </div>`;
+}
+
+function initLivePulse() {
+  if (pulseInterval) clearInterval(pulseInterval);
+  const feed = document.getElementById('pulse-feed');
+  if (!feed) return;
+  feed.innerHTML = '';
+
+  function addMsg() {
+    const el = document.getElementById('pulse-feed');
+    if (!el) { clearInterval(pulseInterval); return; }
+    const msg = PULSE_MSGS[Math.floor(Math.random() * PULSE_MSGS.length)];
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:flex-start;gap:8px;background:#161b22;border-radius:8px;padding:8px 10px;border:1px solid #21262d;opacity:0;transition:opacity .4s;font-size:.78rem;color:#e6edf3';
+    row.innerHTML = `<span style="flex-shrink:0;margin-top:1px;font-size:.7rem;color:#6b7280">${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span>${msg}`;
+    el.insertBefore(row, el.firstChild);
+    requestAnimationFrame(() => row.style.opacity = '1');
+    while (el.children.length > 5) el.removeChild(el.lastChild);
+  }
+
+  addMsg();
+  pulseInterval = setInterval(addMsg, 2200);
+}
+
+// ── CD6: Event Ticket ────────────────────────────────────────
+let ticketClaimed = false;
+let countdownInterval = null;
+let remainingSeconds = 23 * 3600 + 47 * 60 + 12;
+
+function renderEventTicket() {
+  const seats = ticketClaimed ? 4 : 3;
+  const seatsHtml = Array.from({length:5}, (_,i) =>
+    i < seats
+      ? `<div style="width:18px;height:18px;border-radius:50%;background:#F97316;border:2px solid #ea580c"></div>`
+      : `<div style="width:18px;height:18px;border-radius:50%;border:2px dashed #30363d;background:#0d1117"></div>`
+  ).join('');
+
+  return `
+  <div class="demo-title">Event Ticket</div>
+  <div style="border-radius:12px;overflow:hidden;border:1px solid #30363d">
+    <div style="background:linear-gradient(135deg,#7c2d12,#c2410c);padding:16px;text-align:center">
+      <div style="font-size:.65rem;color:#fed7aa;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Octalysis Workshop</div>
+      <div style="font-size:1.1rem;font-weight:900;color:#fff">Live Design Sprint</div>
+    </div>
+    <div style="background:#161b22;padding:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div>
+          <div style="font-size:.62rem;color:#6b7280;text-transform:uppercase;letter-spacing:.6px">Time Remaining</div>
+          <div id="ticket-countdown" style="font-size:1.6rem;font-weight:900;color:#F97316;letter-spacing:-.02em">23:47:12</div>
+        </div>
+        <div>
+          <div style="font-size:.62rem;color:#6b7280;text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px">Seats</div>
+          <div style="display:flex;gap:4px">${seatsHtml}</div>
+          <div style="font-size:.62rem;color:#F97316;margin-top:3px">${5-seats} of 5 remaining</div>
+        </div>
+      </div>
+      <button id="ticket-btn" onclick="claimTicket()" ${ticketClaimed ? 'disabled' : ''}
+        style="width:100%;background:${ticketClaimed ? '#21262d' : '#F97316'};color:${ticketClaimed ? '#6b7280' : '#fff'};border:none;border-radius:8px;padding:10px;font-size:.84rem;font-weight:700;cursor:${ticketClaimed ? 'default' : 'pointer'};transition:background .2s">
+        ${ticketClaimed ? '✓ Spot Claimed' : 'Claim Your Spot'}
+      </button>
+    </div>
+  </div>`;
+}
+
+window.claimTicket = function() {
+  if (ticketClaimed) return;
+  ticketClaimed = true;
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) demoEl.innerHTML = renderEventTicket();
+  initEventTicket();
+};
+
+function formatCountdown(s) {
+  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+
+function initEventTicket() {
+  ticketClaimed = false;
+  remainingSeconds = 23 * 3600 + 47 * 60 + 12;
+  if (countdownInterval) clearInterval(countdownInterval);
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) demoEl.innerHTML = renderEventTicket();
+  countdownInterval = setInterval(() => {
+    const el = document.getElementById('ticket-countdown');
+    if (!el) { clearInterval(countdownInterval); return; }
+    remainingSeconds = Math.max(0, remainingSeconds - 1);
+    el.textContent = formatCountdown(remainingSeconds);
+  }, 1000);
+}
+
+// ── CD7: Scratch Card ────────────────────────────────────────
+const SCRATCH_POOL = [
+  {name:'Variable Reward', desc:'Unpredictable payoffs are more motivating than predictable ones.'},
+  {name:'Easter Egg', desc:'Hidden surprises reward curious explorers and create delight.'},
+  {name:'Glowing Choice', desc:'Highlighting one option makes it feel special and urgent.'},
+  {name:'Rolling Rewards', desc:'Rewards that build over time create anticipation for the next cycle.'},
+  {name:'Sudden Reward', desc:'Unexpected bonuses create emotional spikes stronger than any announcement.'},
+  {name:'Mini Quest', desc:'Small side-challenges break monotony and reward exploration.'},
+  {name:'Visual Storytelling', desc:'Showing events as they unfold keeps users engaged with what happens next.'},
+  {name:'Evolved UI', desc:'An interface that reveals new features over time sustains long-term curiosity.'},
+];
+
+let currentScratch = null;
+let scratchRevealed = false;
+
+function pickScratch() {
+  return SCRATCH_POOL[Math.floor(Math.random() * SCRATCH_POOL.length)];
+}
+
+function renderScratchCard() {
+  currentScratch = pickScratch();
+  scratchRevealed = false;
+  return `
+  <div class="demo-title">Scratch Card</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d;text-align:center">
+    <div style="font-size:.72rem;color:#6b7280;margin-bottom:14px">Click to reveal a hidden technique</div>
+    <div id="scratch-card" onclick="revealScratch()" style="position:relative;height:110px;border-radius:10px;overflow:hidden;cursor:pointer;margin-bottom:14px">
+      <!-- Revealed content (behind) -->
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#0e4d4d,#0d3d5a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px">
+        <div id="scratch-technique" style="font-size:.95rem;font-weight:900;color:#06B6D4">${currentScratch.name}</div>
+        <div id="scratch-desc" style="font-size:.75rem;color:#8b949e;line-height:1.5;max-width:220px">${currentScratch.desc}</div>
+      </div>
+      <!-- Scratch overlay (on top) -->
+      <div id="scratch-overlay" style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#21262d,#21262d 4px,#1c2129 4px,#1c2129 8px);display:flex;align-items:center;justify-content:center;transition:opacity .5s">
+        <div style="font-size:1.8rem">🪙</div>
+        <div style="font-size:.75rem;color:#8b949e;margin-left:8px">Scratch here</div>
+      </div>
+    </div>
+    <button onclick="resetScratch()" style="background:#161b22;color:#06B6D4;border:1px solid #06B6D4;border-radius:8px;padding:7px 16px;font-size:.78rem;font-weight:700;cursor:pointer">↺ Scratch another</button>
+  </div>`;
+}
+
+window.revealScratch = function() {
+  if (scratchRevealed) return;
+  scratchRevealed = true;
+  const overlay = document.getElementById('scratch-overlay');
+  if (overlay) { overlay.style.opacity = '0'; overlay.style.pointerEvents = 'none'; }
+};
+
+window.resetScratch = function() {
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) demoEl.innerHTML = renderScratchCard();
+};
+
+function initScratchCard() {}
+
+// ── CD8: Streak Tracker ──────────────────────────────────────
+let streakKept = false;
+
+function renderStreakTracker() {
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const filledDays = [0,1,2,3,4];
+  const todayIdx = 5;
+
+  const dayDots = days.map((day, i) => {
+    let bg, border, color;
+    if (streakKept && i === todayIdx) {
+      bg = '#10B981'; border = '#059669'; color = '#6ee7b7';
+    } else if (filledDays.includes(i)) {
+      bg = '#EF4444'; border = '#dc2626'; color = '#fca5a5';
+    } else if (i === todayIdx) {
+      bg = 'transparent'; border = '#EF4444'; color = '#EF4444';
+    } else {
+      bg = '#21262d'; border = '#30363d'; color = '#6b7280';
+    }
+    return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+      <div style="width:28px;height:28px;border-radius:50%;background:${bg};border:2px solid ${border};display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:${color}">${i === todayIdx ? (streakKept ? '✓' : '?') : '✓'}</div>
+      <div style="font-size:.55rem;color:#6b7280">${day}</div>
+    </div>`;
+  }).join('');
+
+  const warningHtml = streakKept
+    ? `<div style="display:flex;align-items:center;gap:6px;background:#064e3b;border-radius:8px;padding:8px 12px;border:1px solid #059669;font-size:.78rem;color:#6ee7b7"><span>✓</span> Streak protected — 6 days strong!</div>`
+    : `<div style="display:flex;align-items:center;gap:6px;background:#450a0a;border-radius:8px;padding:8px 12px;border:1px solid #dc2626;font-size:.78rem;color:#fca5a5"><span>⚠️</span> Streak at risk — complete today's task to keep it!</div>`;
+
+  return `
+  <div class="demo-title">Streak Tracker</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+      <span style="font-size:1.8rem">🔥</span>
+      <div>
+        <div style="font-size:1.2rem;font-weight:900;color:${streakKept ? '#10B981' : '#EF4444'}">${streakKept ? 6 : 5} day streak</div>
+        <div style="font-size:.68rem;color:#6b7280">Keep going — don't break the chain</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:14px">${dayDots}</div>
+    ${warningHtml}
+    ${streakKept ? '' : `<button onclick="keepStreak()" style="width:100%;margin-top:10px;background:#EF4444;color:#fff;border:none;border-radius:8px;padding:10px;font-size:.84rem;font-weight:700;cursor:pointer">🔥 Keep My Streak</button>`}
+  </div>`;
+}
+
+window.keepStreak = function() {
+  streakKept = true;
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) { demoEl.innerHTML = renderStreakTracker(); }
+};
+
+function initStreakTracker() { streakKept = false; }
+</script>
+</body>
+</html>

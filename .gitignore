@@ -25,3 +25,7 @@ venv/
 .cache/
 dist/
 .tmp/
+
+# Git worktrees
+.worktrees/
+.superpowers/
