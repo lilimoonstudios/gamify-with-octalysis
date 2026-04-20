@@ -159,7 +159,7 @@ const DRIVES = [
     desc:'The internal drive to progress, develop skills, and overcome challenges. Progress bars and XP make invisible growth visible.',
     demoId:'demo-cd2' },
   { cd:3, name:'Empowerment of Creativity',    icon:'🧩', color:'#8B5CF6',
-    hat:'⬛ Black Hat', brain:'🧠 Right Brain',
+    hat:'⬜ White Hat', brain:'🧠 Right Brain',
     desc:'The drive to try new combinations and get meaningful feedback. When every choice leads to a unique outcome, creativity loops become addictive.',
     demoId:'demo-cd3' },
   { cd:4, name:'Ownership & Possession',       icon:'📦', color:'#10B981',
@@ -642,7 +642,11 @@ function formatCountdown(s) {
 }
 
 function initEventTicket() {
+  ticketClaimed = false;
+  remainingSeconds = 23 * 3600 + 47 * 60 + 12;
   if (countdownInterval) clearInterval(countdownInterval);
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) demoEl.innerHTML = renderEventTicket();
   countdownInterval = setInterval(() => {
     const el = document.getElementById('ticket-countdown');
     if (!el) { clearInterval(countdownInterval); return; }
