@@ -43,132 +43,94 @@
 
     /* ── NAV ─────────────────────────────────────────────── */
     .nav-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 32px;
-      background: var(--surface);
-      position: sticky;
-      top: 0;
-      z-index: 300;
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,.06);
-      gap: 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 32px; background: #fff; position: sticky; top: 0;
+      z-index: 300; border-bottom: 1px solid #E5E7EB;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06); gap: 16px;
     }
     .nav-logo {
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #8B5CF6;
-      background: #F5F3FF;
-      border: 1px solid #DDD6FE;
-      border-radius: 20px;
-      padding: 5px 14px;
-      white-space: nowrap;
+      font-size: .7rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: #8B5CF6; background: #F5F3FF;
+      border: 1px solid #DDD6FE; border-radius: 20px; padding: 5px 14px;
+      white-space: nowrap; text-decoration: none;
     }
-    .nav-links { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
     .nav-link {
-      padding: 7px 16px;
-      border-radius: 8px;
-      border: none;
-      font-size: .84rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all .15s;
-      background: transparent;
-      color: var(--muted);
-      text-decoration: none;
-      display: inline-block;
+      padding: 7px 14px; font-size: .84rem; font-weight: 600;
+      color: #6B7280; text-decoration: none; border-radius: 8px;
+      transition: color .15s;
     }
-    .nav-link:hover { background: var(--bg); color: var(--text); }
-    .nav-link.active {
-      background: transparent;
-      color: var(--text);
-      box-shadow: inset 0 -2px 0 #8B5CF6;
+    .nav-link:hover { color: #111827; }
+    .nav-link.active { color: #111827; box-shadow: inset 0 -2px 0 #8B5CF6; }
+    .nav-playground {
+      font-size: .75rem; font-weight: 700; padding: 6px 14px;
+      border-radius: 20px; background: #0d1117; color: #e6edf3;
+      border: 1px solid #30363d; text-decoration: none; white-space: nowrap;
     }
-    .nav-right { display: flex; align-items: center; gap: 8px; }
-    .nav-badge {
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .6px;
-      padding: 4px 12px;
-      border-radius: 20px;
-      border: 1px solid;
-      white-space: nowrap;
-    }
-    .nav-badge.white { color: var(--white-hat); border-color: #86EFAC; background: var(--white-hat-l); }
-    .nav-badge.black { color: #374151; border-color: var(--border); background: #F9FAFB; }
+    .nav-playground:hover { background: #161b22; }
 
-    /* ── HERO ─────────────────────────────────────────────── */
+    /* ── HERO ──────────────────────────────────────────── */
     .hero {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 64px 40px 56px;
+      background: #fff; border-bottom: 1px solid #E5E7EB;
+      padding: 64px 24px 72px; text-align: center;
     }
-    .hero-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 64px;
-      align-items: center;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: #F5F3FF;
-      border: 1px solid #DDD6FE;
-      border-radius: 20px;
-      padding: 5px 16px;
-      font-size: .75rem;
-      letter-spacing: .8px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      color: #8B5CF6;
-      font-weight: 700;
+    .hero-eyebrow {
+      font-size: .72rem; font-weight: 700; letter-spacing: .8px;
+      text-transform: uppercase; color: #8B5CF6; margin-bottom: 12px;
     }
     .hero h1 {
-      font-size: 2.6rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.15;
+      font-size: 2.4rem; font-weight: 900; letter-spacing: -.04em;
+      line-height: 1.1; color: #111827; margin-bottom: 10px;
     }
     .hero h1 .grad {
-      background: linear-gradient(90deg, #F59E0B, #EC4899, #8B5CF6, #06B6D4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background: linear-gradient(90deg,#F59E0B,#EC4899,#8B5CF6,#06B6D4);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .hero-desc {
-      color: var(--muted);
-      margin-top: 16px;
-      font-size: 1.02rem;
-      max-width: 520px;
-      line-height: 1.7;
+    .hero-sub {
+      font-size: 1rem; color: #6B7280; max-width: 520px;
+      margin: 0 auto 48px; line-height: 1.7;
     }
-    .hero-author {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: .88rem;
-      color: var(--muted);
+    .oct-hero {
+      position: relative;
+      width: min(800px, calc(100vw - 48px));
+      aspect-ratio: 1;
+      margin: 0 auto;
     }
-    .hero-author strong { color: var(--text); }
-    .hero-pills { display: flex; gap: 8px; margin-top: 28px; flex-wrap: wrap; }
-    .hat-pill {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 16px;
-      border-radius: 30px;
-      border: 1.5px solid;
-      font-size: .82rem;
-      font-weight: 700;
+    #ring-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
     }
-    .hat-pill.white { color: var(--white-hat); border-color: #86EFAC; background: var(--white-hat-l); }
-    .hat-pill.black { color: #374151; border-color: #D1D5DB; background: #F9FAFB; }
-    .hero-oct { display: flex; justify-content: center; align-items: center; }
-    #hero-svg { width: 100%; max-width: 340px; filter: drop-shadow(0 8px 24px rgba(0,0,0,.12)); }
+    .spoke-card {
+      position: absolute; transform: translate(-50%,-50%);
+      background: #fff; border-radius: 14px; padding: 12px 14px;
+      border: 1.5px solid #E5E7EB;
+      box-shadow: 0 2px 8px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.04);
+      width: clamp(90px, 18.5vw, 148px); cursor: pointer; transition: all .2s;
+      text-decoration: none; color: inherit;
+    }
+    .spoke-card:hover {
+      border-color: #2563EB;
+      box-shadow: 0 4px 16px rgba(37,99,235,.15), 0 0 0 3px rgba(37,99,235,.1);
+      transform: translate(-50%,-50%) scale(1.04);
+    }
+    .spoke-card-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .spoke-num {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: #2563EB; color: #fff; font-size: .68rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .spoke-icon-box {
+      width: 32px; height: 32px; border-radius: 8px; background: #EFF6FF;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .95rem; flex-shrink: 0; margin-left: auto;
+    }
+    .spoke-name { font-size: .78rem; font-weight: 800; color: #2563EB; line-height: 1.25; margin-bottom: 4px; }
+    .spoke-desc { font-size: .67rem; color: #6B7280; line-height: 1.45; }
+    @media (max-width: 600px) {
+      .spoke-card { padding: 8px 10px; font-size: .7rem; }
+      .spoke-name { font-size: .65rem; }
+      .spoke-desc { display: none; }
+    }
 
     /* ── TWO-PANEL EXPLORER ───────────────────────────────── */
     .explorer-wrap {
@@ -324,6 +286,27 @@
       color: #374151;
     }
 
+    /* 3-col examples grid */
+    .examples-grid-3col {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 10px; margin-bottom: 20px;
+    }
+
+    /* UI demo panels (dark) */
+    .ui-demos-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 10px; margin-bottom: 20px;
+    }
+    .ui-demo-panel {
+      background: #0d1117; border-radius: 10px;
+      padding: 12px; border: 1px solid #21262d; min-height: 90px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .ui-demo-label {
+      font-size: .6rem; font-weight: 700; letter-spacing: .5px;
+      text-transform: uppercase; color: #6b7280;
+    }
+
     /* Designer tip */
     .designer-tip {
       background: var(--bg);
@@ -358,66 +341,6 @@
       max-width: 600px;
       line-height: 1.7;
       margin-bottom: 40px;
-    }
-
-    /* ── HAT SECTION ─────────────────────────────────────── */
-    .hat-section {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .hat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .hat-col { border-radius: 16px; padding: 32px; }
-    .hat-col.white { background: var(--white-hat-l); border: 1.5px solid #86EFAC; }
-    .hat-col.black { background: #F9FAFB; border: 1.5px solid #D1D5DB; }
-    .hat-col h3 {
-      font-size: 1.15rem;
-      font-weight: 800;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .hat-col p { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
-    .hat-drives { display: flex; flex-wrap: wrap; gap: 8px; }
-    .hat-drive-chip {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: .82rem;
-      font-weight: 700;
-      color: white;
-    }
-    .hat-col.white .hat-note { font-size: .82rem; color: var(--white-hat); font-weight: 600; margin-top: 14px; }
-    .hat-col.black .hat-note { font-size: .82rem; color: #374151; font-weight: 600; margin-top: 14px; }
-
-    /* ── BRAIN SECTION ───────────────────────────────────── */
-    .brain-section { padding: 64px 24px; max-width: 1200px; margin: 0 auto; }
-    .brain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-    .brain-col { border-radius: 16px; padding: 32px; border: 1.5px solid; }
-    .brain-col.left { background: #EFF6FF; border-color: #BFDBFE; }
-    .brain-col.right { background: #F5F3FF; border-color: #DDD6FE; }
-    .brain-col h3 {
-      font-size: 1.15rem;
-      font-weight: 800;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .brain-col p { font-size: .9rem; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
-    .brain-drives { display: flex; flex-wrap: wrap; gap: 8px; }
-    .brain-drive-chip {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: .82rem;
-      font-weight: 700;
-      color: white;
     }
 
     /* ── APPLY SECTION ───────────────────────────────────── */
@@ -508,13 +431,15 @@
 
     /* ── RESPONSIVE ──────────────────────────────────────── */
     @media (max-width: 900px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-oct { order: -1; }
-      #hero-svg { max-width: 260px; }
       .explorer-wrap { grid-template-columns: 1fr; }
       .explorer-sticky { position: static; }
       .examples-grid { grid-template-columns: 1fr; }
-      .hat-grid, .brain-grid, .apply-steps, .about-grid { grid-template-columns: 1fr; }
+      .examples-grid-3col { grid-template-columns: 1fr 1fr; }
+      .ui-demos-row { grid-template-columns: 1fr; }
+      .apply-steps, .about-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .examples-grid-3col { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -522,48 +447,69 @@
 
   <!-- ── NAV ──────────────────────────────────────────────── -->
   <nav class="nav-bar">
-    <div class="nav-logo">Octalysis</div>
+    <a href="index.html" class="nav-logo">Octalysis</a>
     <div class="nav-links">
-      <a class="nav-link active" href="#drives">Core Drives</a>
-      <a class="nav-link" href="#hats">White / Black Hat</a>
-      <a class="nav-link" href="#brain">Left / Right Brain</a>
-      <a class="nav-link" href="#apply">How to Apply</a>
-      <a class="nav-link" href="#about">About</a>
+      <a href="#core-drives" class="nav-link active">Core Drives</a>
+      <a href="#apply" class="nav-link">Apply</a>
+      <a href="#about" class="nav-link">About</a>
     </div>
-    <div class="nav-right">
-      <span class="nav-badge white">⬜ White Hat</span>
-      <span class="nav-badge black">⬛ Black Hat</span>
-    </div>
+    <a href="playground.html" class="nav-playground">🎮 Playground</a>
   </nav>
 
   <!-- ── HERO ──────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <span class="hero-badge">Gamification Framework</span>
-        <h1>The <span class="grad">Octalysis</span><br>Framework</h1>
-        <p class="hero-desc">
-          A comprehensive model of the 8 core drives of human motivation — the forces behind why we do anything at all. Use it to design experiences that are genuinely engaging, not just addictive.
-        </p>
-        <div class="hero-author">
-          <span>Framework by</span>
-          <strong>Yu-kai Chou</strong>
-          <span>·</span>
-          <span>Author of <em>Actionable Gamification</em></span>
-        </div>
-        <div class="hero-pills">
-          <div class="hat-pill white">⬜ White Hat — motivates positively</div>
-          <div class="hat-pill black">⬛ Black Hat — urgency &amp; anxiety</div>
-        </div>
-      </div>
-      <div class="hero-oct">
-        <svg id="hero-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"></svg>
-      </div>
+  <section class="hero" id="hero">
+    <div class="hero-eyebrow">The Octalysis Framework</div>
+    <h1>The <span class="grad">8 Core Drives</span><br>of Human Motivation</h1>
+    <p class="hero-sub">A framework by Yu-kai Chou for designing genuinely engaging experiences. Click any drive to read its full description.</p>
+
+    <div class="oct-hero">
+      <svg id="ring-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg"></svg>
+
+      <a href="#drive-1" class="spoke-card" style="left:50%;top:8.25%">
+        <div class="spoke-card-top"><div class="spoke-num">1</div><div class="spoke-icon-box">🌐</div></div>
+        <div class="spoke-name">Epic Meaning &amp; Calling</div>
+        <div class="spoke-desc">The drive to become part of something bigger than ourselves.</div>
+      </a>
+      <a href="#drive-2" class="spoke-card" style="left:81.875%;top:21.25%">
+        <div class="spoke-card-top"><div class="spoke-num">2</div><div class="spoke-icon-box">🏆</div></div>
+        <div class="spoke-name">Development &amp; Accomplishment</div>
+        <div class="spoke-desc">The drive to level up, improve, and achieve progress.</div>
+      </a>
+      <a href="#drive-3" class="spoke-card" style="left:90.75%;top:50%">
+        <div class="spoke-card-top"><div class="spoke-num">3</div><div class="spoke-icon-box">🧩</div></div>
+        <div class="spoke-name">Empowerment of Creativity</div>
+        <div class="spoke-desc">The drive to create, experiment, and get real feedback.</div>
+      </a>
+      <a href="#drive-4" class="spoke-card" style="left:81.875%;top:78.75%">
+        <div class="spoke-card-top"><div class="spoke-num">4</div><div class="spoke-icon-box">📦</div></div>
+        <div class="spoke-name">Ownership &amp; Possession</div>
+        <div class="spoke-desc">The drive to collect, accumulate, and organise.</div>
+      </a>
+      <a href="#drive-5" class="spoke-card" style="left:50%;top:91.75%">
+        <div class="spoke-card-top"><div class="spoke-num">5</div><div class="spoke-icon-box">👥</div></div>
+        <div class="spoke-name">Social Influence &amp; Relatedness</div>
+        <div class="spoke-desc">The drive to collaborate, compete, and express social identity.</div>
+      </a>
+      <a href="#drive-6" class="spoke-card" style="left:18.125%;top:78.75%">
+        <div class="spoke-card-top"><div class="spoke-num">6</div><div class="spoke-icon-box">⏳</div></div>
+        <div class="spoke-name">Scarcity &amp; Impatience</div>
+        <div class="spoke-desc">The drive to obsess over what we cannot have yet.</div>
+      </a>
+      <a href="#drive-7" class="spoke-card" style="left:9.25%;top:50%">
+        <div class="spoke-card-top"><div class="spoke-num">7</div><div class="spoke-icon-box">🎲</div></div>
+        <div class="spoke-name">Unpredictability &amp; Curiosity</div>
+        <div class="spoke-desc">The drive to know what is unpredictable and new.</div>
+      </a>
+      <a href="#drive-8" class="spoke-card" style="left:18.125%;top:21.25%">
+        <div class="spoke-card-top"><div class="spoke-num">8</div><div class="spoke-icon-box">🚩</div></div>
+        <div class="spoke-name">Loss &amp; Avoidance</div>
+        <div class="spoke-desc">The drive to avoid undesirable outcomes and protect current state.</div>
+      </a>
     </div>
   </section>
 
   <!-- ── DRIVE EXPLORER ─────────────────────────────────────── -->
-  <div id="drives" class="explorer-wrap">
+  <div id="core-drives" class="explorer-wrap">
     <!-- LEFT: Scrolling drive cards -->
     <div class="drives-list">
 
@@ -583,35 +529,76 @@
         <div class="drive-body">
           <p class="drive-desc">The user believes they're contributing to something greater than themselves — a larger mission, a legacy, or a destiny. They feel "chosen" or uniquely qualified to do the task. This is the most powerful and long-lasting drive when activated authentically.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
-              <div class="example-product">🌐 Wikipedia</div>
-              <span class="example-technique" style="background:#F59E0B">Higher Purpose</span>
-              <p class="example-body">Editors contribute freely because they believe they're building humanity's shared knowledge base.</p>
+              <div class="example-product">🌍 Wikipedia</div>
+              <span class="example-technique" style="background:#F59E0B">Humanity Hero</span>
+              <p class="example-body">Editors contribute without pay because they believe in free knowledge for all humanity.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🐙 Open Source (GitHub)</div>
-              <span class="example-technique" style="background:#F59E0B">Legacy Building</span>
-              <p class="example-body">Developers contribute code for free — the software they write outlives them and benefits millions.</p>
+              <div class="example-product">🐧 Open Source</div>
+              <span class="example-technique" style="background:#F59E0B">Co-Creator</span>
+              <p class="example-body">Developers contribute to codebases they'll never own — the collective mission is the reward.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🦜 Duolingo</div>
-              <span class="example-technique" style="background:#F59E0B">Narrative Calling</span>
-              <p class="example-body">"You're helping connect cultures." Language learning is framed as a mission, not just self-improvement.</p>
+              <div class="example-product">🦸 Superhero Narratives</div>
+              <span class="example-technique" style="background:#F59E0B">Narrative</span>
+              <p class="example-body">Games and apps that cast the user as "the chosen one" create immediate emotional investment.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">❓ Quora</div>
+              <div class="example-product">💉 Blood Donation</div>
               <span class="example-technique" style="background:#F59E0B">Elitism</span>
-              <p class="example-body">Early invite-only access made users feel like specially selected knowledge-sharers, not just contributors.</p>
+              <p class="example-body">"You are one of the few people with Type O— who can help." Scarcity of the gift elevates the giver.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🎮 World of Warcraft</div>
+              <span class="example-technique" style="background:#F59E0B">World-Defining</span>
+              <p class="example-body">Rich lore and faction identity make players feel part of a living history, not just playing a game.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🌱 Ecosia Browser</div>
+              <span class="example-technique" style="background:#F59E0B">Inspiring Meaning</span>
+              <p class="example-body">Each search plants trees. The counter makes your daily browsing feel purposeful.</p>
             </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Mission Counter</div>
+              <div style="text-align:center;padding:6px 0">
+                <div style="font-size:.65rem;color:#6b7280;margin-bottom:4px">Community Members</div>
+                <div style="font-size:1.8rem;font-weight:900;color:#F59E0B;letter-spacing:-.03em">84,271</div>
+                <div style="font-size:.62rem;color:#6b7280">designers, developers &amp; educators</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Chosen Role Badge</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:4px 0">
+                <div style="width:36px;height:36px;border-radius:50%;background:#78350f;display:flex;align-items:center;justify-content:center;font-size:1.1rem;border:2px solid #F59E0B">🌐</div>
+                <div>
+                  <div style="font-size:.72rem;font-weight:700;color:#e6edf3">Guardian of Knowledge</div>
+                  <div style="font-size:.62rem;color:#F59E0B">Chosen Role · Epic Tier</div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">World Narrative Banner</div>
+              <div style="background:linear-gradient(135deg,#78350f,#92400e);border-radius:6px;padding:8px;text-align:center">
+                <div style="font-size:.65rem;color:#fde68a;font-weight:700;letter-spacing:.5px">YOUR MISSION</div>
+                <div style="font-size:.78rem;color:#fff;line-height:1.4;margin-top:3px">Help 100,000 learners discover gamification</div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Narrative &amp; lore</span>
-            <span class="technique-chip">Elitism / exclusivity</span>
-            <span class="technique-chip">Beginner's luck</span>
-            <span class="technique-chip">The Chosen One</span>
-            <span class="technique-chip">Co-creation stories</span>
+            <span class="technique-chip">Narrative / Storytelling</span>
+            <span class="technique-chip">Elitism</span>
+            <span class="technique-chip">World-Defining</span>
+            <span class="technique-chip">Beginners Luck</span>
+            <span class="technique-chip">Free Lunch</span>
+            <span class="technique-chip">Humanity Hero</span>
+            <span class="technique-chip">Co-Creator</span>
+            <span class="technique-chip">Inspiring Meaning</span>
           </div>
           <div class="designer-tip" style="border-color:#F59E0B">
             <div class="tip-label" style="color:#92400E">💡 Designer Tip</div>
@@ -636,36 +623,87 @@
         <div class="drive-body">
           <p class="drive-desc">The internal drive to make progress, develop skills, and overcome challenges. This is the most implemented drive in gamification — but points, badges, and leaderboards only work here when the underlying challenge is genuinely rewarding.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
               <div class="example-product">💼 LinkedIn</div>
               <span class="example-technique" style="background:#3B82F6">Progress Bar</span>
-              <p class="example-body">Profile strength % with specific next steps. Users feel incomplete until they reach "All-Star" status.</p>
+              <p class="example-body">Profile strength % with specific next steps keeps users returning until "All-Star" status.</p>
             </div>
             <div class="example-card">
               <div class="example-product">🐙 GitHub</div>
-              <span class="example-technique" style="background:#3B82F6">Streak / Contribution Graph</span>
-              <p class="example-body">The annual contribution heatmap becomes a public record of consistency developers are proud to maintain.</p>
+              <span class="example-technique" style="background:#3B82F6">Contribution Graph</span>
+              <p class="example-body">The annual heatmap becomes a public record of consistency — developers feel pride maintaining it.</p>
             </div>
             <div class="example-card">
               <div class="example-product">🦜 Duolingo</div>
-              <span class="example-technique" style="background:#3B82F6">XP + Leaderboard</span>
-              <p class="example-body">Weekly league standings create social benchmarking — you can always see exactly who you're competing with.</p>
+              <span class="example-technique" style="background:#3B82F6">XP + Leagues</span>
+              <p class="example-body">Weekly league standings create social benchmarking — you can see who you're competing with.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🏃 Strava / Fitness Apps</div>
+              <div class="example-product">🏃 Strava</div>
               <span class="example-technique" style="background:#3B82F6">Milestone Badges</span>
               <p class="example-body">First 5K, personal best, 100-mile club — each milestone provides a sense of earned achievement.</p>
             </div>
+            <div class="example-card">
+              <div class="example-product">🎮 Xbox / Steam</div>
+              <span class="example-technique" style="background:#3B82F6">Achievement System</span>
+              <p class="example-body">Unlockable trophies extend game value — players return for 100% completion runs.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">📚 Khan Academy</div>
+              <span class="example-technique" style="background:#3B82F6">Mastery Bars</span>
+              <p class="example-body">Colour-coded skill mastery (practiced → familiar → proficient → mastered) makes learning visible.</p>
+            </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Progress Bar</div>
+              <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#6b7280;margin-bottom:3px"><span>Level 3</span><span style="color:#3B82F6">680 / 1000 XP</span></div>
+              <div style="height:7px;background:#21262d;border-radius:4px"><div style="width:68%;height:100%;background:linear-gradient(90deg,#3B82F6,#8B5CF6);border-radius:4px;box-shadow:0 0 6px rgba(59,130,246,.5)"></div></div>
+              <div style="font-size:.62rem;color:#6b7280;margin-top:4px">Next reward: 320 XP away</div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Badge Achievement</div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1d4ed8,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 0 12px rgba(59,130,246,.4)">🎨</div>
+                <div>
+                  <div style="font-size:.72rem;font-weight:700;color:#e6edf3">Level Up!</div>
+                  <div style="font-size:.62rem;color:#6b7280">You reached Level 4 · Explorer</div>
+                  <div style="font-size:.6rem;color:#3B82F6;margin-top:2px">+1 new skill unlocked</div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Quest List</div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="display:flex;align-items:center;gap:5px;font-size:.7rem">
+                  <div style="width:14px;height:14px;border-radius:50%;background:#10B981;display:flex;align-items:center;justify-content:center;font-size:.55rem;color:#fff;flex-shrink:0">✓</div>
+                  <span style="color:#6b7280;text-decoration:line-through">Complete profile</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:5px;font-size:.7rem">
+                  <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid #3B82F6;flex-shrink:0"></div>
+                  <span style="color:#e6edf3;font-weight:600">Make first post</span>
+                  <span style="margin-left:auto;color:#3B82F6;font-size:.6rem">+60 XP</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:5px;font-size:.7rem">
+                  <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid #30363d;flex-shrink:0"></div>
+                  <span style="color:#6b7280">Get 10 followers</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Points &amp; XP</span>
-            <span class="technique-chip">Badges &amp; trophies</span>
-            <span class="technique-chip">Leaderboards</span>
-            <span class="technique-chip">Progress bars</span>
-            <span class="technique-chip">Achievement unlocks</span>
-            <span class="technique-chip">Level-up ceremonies</span>
+            <span class="technique-chip">Points</span>
+            <span class="technique-chip">Badges</span>
+            <span class="technique-chip">Leaderboard</span>
+            <span class="technique-chip">Progress Bar</span>
+            <span class="technique-chip">Quest Lists</span>
+            <span class="technique-chip">Boss Fights</span>
+            <span class="technique-chip">Certificates</span>
+            <span class="technique-chip">High-Five</span>
+            <span class="technique-chip">Achievement Symbols</span>
           </div>
           <div class="designer-tip" style="border-color:#3B82F6">
             <div class="tip-label" style="color:#1E40AF">💡 Designer Tip</div>
@@ -690,36 +728,84 @@
         <div class="drive-body">
           <p class="drive-desc">Engaging users in a creative process where they can repeatedly figure things out, try different combinations, and see the results of their choices in real time. The feedback loop is essential — creativity without feedback feels meaningless.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
-              <div class="example-product">⛏️ Minecraft</div>
-              <span class="example-technique" style="background:#8B5CF6">Open World Creation</span>
-              <p class="example-body">No instructions, no goals — pure creative freedom with infinite combinations. The world is the feedback.</p>
+              <div class="example-product">🏗️ Minecraft</div>
+              <span class="example-technique" style="background:#8B5CF6">Build From Scratch</span>
+              <p class="example-body">Unlimited materials, no objectives — pure expression. Players spend hundreds of hours building things no one asked for.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🎨 Canva</div>
-              <span class="example-technique" style="background:#8B5CF6">Constrained Creativity</span>
-              <p class="example-body">Templates create guardrails so users feel capable — then they can break the rules once confident.</p>
+              <div class="example-product">🎨 Figma / Canva</div>
+              <span class="example-technique" style="background:#8B5CF6">Instant Feedback</span>
+              <p class="example-body">Real-time preview of every design change creates a tight creative loop — you see results immediately.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🎵 TikTok</div>
-              <span class="example-technique" style="background:#8B5CF6">Remix &amp; Effects</span>
-              <p class="example-body">Sounds, filters, and transitions make creation accessible. "Duet" enables collaboration within constraints.</p>
+              <div class="example-product">🎮 Roblox</div>
+              <span class="example-technique" style="background:#8B5CF6">Co-Creator Tools</span>
+              <p class="example-body">Players build games for other players. The platform provides tools; the users create the content.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🧩 LEGO</div>
-              <span class="example-technique" style="background:#8B5CF6">Structured Freedom</span>
-              <p class="example-body">Instructions provide a starting point, but the real value is building your own version — the "set" becomes raw material.</p>
+              <div class="example-product">🎵 TikTok Duet</div>
+              <span class="example-technique" style="background:#8B5CF6">Attribute Combo</span>
+              <p class="example-body">Duet and stitch features layer creativity on top of existing content — new combos emerge from old material.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">📊 Notion</div>
+              <span class="example-technique" style="background:#8B5CF6">Choice Perception</span>
+              <p class="example-body">Endless template and block combinations give users the feeling they designed their own system.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">💻 StackOverflow</div>
+              <span class="example-technique" style="background:#8B5CF6">Instant Feedback</span>
+              <p class="example-body">Upvotes and accepted answers give immediate signal on the quality of creative problem-solving.</p>
             </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Combo Builder</div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px">
+                <span style="font-size:.62rem;padding:2px 7px;border-radius:10px;background:#1a0d3f;color:#a78bfa;border:1px solid #8B5CF6">Streak</span>
+                <span style="font-size:.62rem;padding:2px 7px;border-radius:10px;background:#1a0d3f;color:#a78bfa;border:1px solid #8B5CF6">Badge</span>
+                <span style="font-size:.62rem;padding:2px 7px;border-radius:10px;background:#161b22;color:#6b7280;border:1px solid #30363d">Timer</span>
+              </div>
+              <div style="background:#0d1117;border-radius:6px;padding:5px 7px;border-left:2px solid #8B5CF6">
+                <div style="font-size:.62rem;font-weight:700;color:#a78bfa">The Habit Loop</div>
+                <div style="font-size:.58rem;color:#6b7280">Daily momentum builds automatic behaviour</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Live Preview</div>
+              <div style="background:#0a0a0a;border-radius:6px;padding:8px;border:1px solid #30363d;text-align:center">
+                <div style="font-size:.65rem;color:#8B5CF6;font-weight:700">Preview</div>
+                <div style="font-size:.75rem;color:#e6edf3;margin-top:3px">Design updates instantly</div>
+                <div style="height:3px;background:linear-gradient(90deg,#8B5CF6,#EC4899);border-radius:2px;margin-top:6px"></div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Feedback Loop</div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <div style="background:#0d2e1a;border-radius:6px;padding:5px 8px;border:1px solid #16a34a;flex:1">
+                  <div style="font-size:.6rem;font-weight:700;color:#4ade80">✓ Valid</div>
+                  <div style="font-size:.58rem;color:#6b7280">Score: 94/100</div>
+                </div>
+                <div style="font-size:.7rem;color:#8B5CF6">→</div>
+                <div style="background:#0a1520;border-radius:6px;padding:5px 8px;border:1px solid #3B82F6;flex:1">
+                  <div style="font-size:.6rem;font-weight:700;color:#60a5fa">Next tip</div>
+                  <div style="font-size:.58rem;color:#6b7280">Try adding contrast</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Milestone unlocks</span>
+            <span class="technique-chip">Milestone Unlocks</span>
+            <span class="technique-chip">Choice Perception</span>
+            <span class="technique-chip">Instant Feedback</span>
             <span class="technique-chip">Boosters</span>
-            <span class="technique-chip">Meaningful choices</span>
-            <span class="technique-chip">Real-time feedback</span>
-            <span class="technique-chip">User-generated content</span>
-            <span class="technique-chip">Combo discovery</span>
+            <span class="technique-chip">Plant &amp; Predict</span>
+            <span class="technique-chip">Attribute Combo</span>
+            <span class="technique-chip">Build From Scratch</span>
           </div>
           <div class="designer-tip" style="border-color:#8B5CF6">
             <div class="tip-label" style="color:#4C1D95">💡 Designer Tip</div>
@@ -744,36 +830,76 @@
         <div class="drive-body">
           <p class="drive-desc">Users are motivated because they feel they own something. The more they personalize, invest in, and customize something, the more attached they become. Ownership also triggers the desire to grow and protect what they have.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
-              <div class="example-product">⚡ Pokémon</div>
+              <div class="example-product">🏠 Animal Crossing</div>
+              <span class="example-technique" style="background:#10B981">Virtual Goods</span>
+              <p class="example-body">Players spend real hours decorating homes with in-game furniture. The island is "yours" in every way that matters.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🎴 Pokémon</div>
               <span class="example-technique" style="background:#10B981">Collection Set</span>
-              <p class="example-body">"Gotta catch 'em all" is the archetypal ownership drive — incompleteness is felt as a loss.</p>
+              <p class="example-body">"Gotta catch 'em all" — the desire to complete a collection drives decades of engagement across generations.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🐦 Twitter / X</div>
-              <span class="example-technique" style="background:#10B981">Status Ownership</span>
-              <p class="example-body">Verification checkmarks became identity markers — their removal felt like losing property, not a subscription.</p>
+              <div class="example-product">💰 Robux / V-Bucks</div>
+              <span class="example-technique" style="background:#10B981">Virtual Currency</span>
+              <p class="example-body">Converting real money to game currency creates psychological distance from spending — and a desire to accumulate.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🛍️ Amazon</div>
-              <span class="example-technique" style="background:#10B981">Wishlist / Territory</span>
-              <p class="example-body">Wishlists create curated personal stores. Users maintain and revisit them because they feel like possessions.</p>
+              <div class="example-product">📝 Notion Workspace</div>
+              <span class="example-technique" style="background:#10B981">Alfred Effect</span>
+              <p class="example-body">A system you built yourself feels like an extension of your mind — switching tools means losing yourself.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">🎮 RPG Games</div>
-              <span class="example-technique" style="background:#10B981">Avatar Customization</span>
-              <p class="example-body">Character customization creates identity attachment — players defend "their" character as if it were themselves.</p>
+              <div class="example-product">🐾 Tamagotchi</div>
+              <span class="example-technique" style="background:#10B981">Protection &amp; Preservation</span>
+              <p class="example-body">You own this creature — and feel responsible for its survival. Neglect creates real guilt.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🏰 Clash of Clans</div>
+              <span class="example-technique" style="background:#10B981">Territory Takeover</span>
+              <p class="example-body">Your base is your territory. Defending it against raids triggers deep ownership instincts.</p>
             </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Passport Stamps</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
+                <div style="aspect-ratio:1;border-radius:6px;background:color-mix(in srgb,#F59E0B 15%,#0d1117);border:1.5px solid #F59E0B;display:flex;align-items:center;justify-content:center;font-size:.85rem;box-shadow:0 0 6px rgba(245,158,11,.3)">🌐</div>
+                <div style="aspect-ratio:1;border-radius:6px;background:color-mix(in srgb,#3B82F6 15%,#0d1117);border:1.5px solid #3B82F6;display:flex;align-items:center;justify-content:center;font-size:.85rem;box-shadow:0 0 6px rgba(59,130,246,.3)">🏆</div>
+                <div style="aspect-ratio:1;border-radius:6px;border:1.5px dashed #30363d;display:flex;align-items:center;justify-content:center;font-size:.85rem;opacity:.35">🧩</div>
+                <div style="aspect-ratio:1;border-radius:6px;border:1.5px dashed #30363d;display:flex;align-items:center;justify-content:center;font-size:.85rem;opacity:.35">📦</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Virtual Currency</div>
+              <div style="text-align:center;padding:4px 0">
+                <div style="font-size:1.4rem;font-weight:900;color:#10B981">⭐ 4,820</div>
+                <div style="font-size:.62rem;color:#6b7280">Coins · this month</div>
+                <div style="font-size:.6rem;color:#10B981;margin-top:3px">+120 earned today</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Collection Set</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">
+                <div style="aspect-ratio:1;border-radius:6px;background:#0d2a1a;border:1px solid #10B981;display:flex;align-items:center;justify-content:center;font-size:.75rem">🏆</div>
+                <div style="aspect-ratio:1;border-radius:6px;background:#0d2a1a;border:1px solid #10B981;display:flex;align-items:center;justify-content:center;font-size:.75rem">⭐</div>
+                <div style="aspect-ratio:1;border-radius:6px;background:#0d2a1a;border:1px solid #10B981;display:flex;align-items:center;justify-content:center;font-size:.75rem">🎯</div>
+                <div style="aspect-ratio:1;border-radius:6px;background:#0d1117;border:1px dashed #30363d;display:flex;align-items:center;justify-content:center;font-size:.75rem;opacity:.4">🔒</div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Virtual goods</span>
-            <span class="technique-chip">Collection mechanics</span>
-            <span class="technique-chip">Building a territory</span>
-            <span class="technique-chip">Avatar customization</span>
-            <span class="technique-chip">Personal dashboard</span>
-            <span class="technique-chip">Naming / labeling</span>
+            <span class="technique-chip">Virtual Goods</span>
+            <span class="technique-chip">Virtual Currency</span>
+            <span class="technique-chip">Build to Give</span>
+            <span class="technique-chip">Collection Set</span>
+            <span class="technique-chip">Protection &amp; Preservation</span>
+            <span class="technique-chip">Territory Takeover</span>
+            <span class="technique-chip">Alfred Effect</span>
           </div>
           <div class="designer-tip" style="border-color:#10B981">
             <div class="tip-label" style="color:#064E3B">💡 Designer Tip</div>
@@ -798,11 +924,11 @@
         <div class="drive-body">
           <p class="drive-desc">Everything social — mentorship, competition, envy, friendship, and belonging. Humans are wired to compare themselves to others and want to be part of a group. Even passive social signals (like a view counter) change behavior.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
               <div class="example-product">👍 Facebook Reactions</div>
               <span class="example-technique" style="background:#EC4899">Social Validation</span>
-              <p class="example-body">Likes create variable validation loops. The question "will people react?" drives posting behavior more than the content itself.</p>
+              <p class="example-body">Likes create variable validation loops. "Will people react?" drives posting behavior more than the content itself.</p>
             </div>
             <div class="example-card">
               <div class="example-product">💼 LinkedIn Endorsements</div>
@@ -819,15 +945,56 @@
               <span class="example-technique" style="background:#EC4899">Social Gifting</span>
               <p class="example-body">Giving a friend a discount feels generous — the referrer gains social capital, not just monetary reward.</p>
             </div>
+            <div class="example-card">
+              <div class="example-product">🟣 Twitch Bits</div>
+              <span class="example-technique" style="background:#EC4899">Social Treasury</span>
+              <p class="example-body">Cheering with Bits is visible to the entire stream. The public act of giving creates status for the giver.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🏅 Discord Roles</div>
+              <span class="example-technique" style="background:#EC4899">Totem / Trophy</span>
+              <p class="example-body">Custom roles and colored names publicly signal your standing within the community — a visible social totem.</p>
+            </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Activity Feed</div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="font-size:.62rem;color:#8b949e;background:#0d1117;border-radius:5px;padding:5px 7px">🎨 Alex earned Level 4 · 2m ago</div>
+                <div style="font-size:.62rem;color:#8b949e;background:#0d1117;border-radius:5px;padding:5px 7px">💻 Sam joined the team · 5m ago</div>
+                <div style="font-size:.62rem;color:#8b949e;background:#0d1117;border-radius:5px;padding:5px 7px">🌍 12 people online now</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Social Proof</div>
+              <div>
+                <div style="display:flex;gap:-4px;margin-bottom:5px">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#EC4899;border:2px solid #161b22;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">A</div>
+                  <div style="width:22px;height:22px;border-radius:50%;background:#3B82F6;border:2px solid #161b22;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;margin-left:-6px">S</div>
+                  <div style="width:22px;height:22px;border-radius:50%;background:#8B5CF6;border:2px solid #161b22;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;margin-left:-6px">M</div>
+                </div>
+                <div style="font-size:.7rem;color:#e6edf3">14 teammates already use this</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Group Quest</div>
+              <div>
+                <div style="font-size:.62rem;color:#6b7280;margin-bottom:4px">Team Sprint — 3/5 tasks done</div>
+                <div style="height:5px;background:#21262d;border-radius:3px;overflow:hidden;margin-bottom:5px"><div style="width:60%;height:100%;background:#EC4899;border-radius:3px"></div></div>
+                <div style="font-size:.62rem;color:#EC4899">2 tasks to unlock team reward</div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Social proof</span>
-            <span class="technique-chip">Gifting / sharing</span>
-            <span class="technique-chip">Mentorship system</span>
-            <span class="technique-chip">Group quests</span>
-            <span class="technique-chip">Social leaderboard</span>
-            <span class="technique-chip">Water-cooler chat</span>
+            <span class="technique-chip">Social Treasure / Gifting</span>
+            <span class="technique-chip">Friending</span>
+            <span class="technique-chip">Conformity Anchor</span>
+            <span class="technique-chip">Group Quest</span>
+            <span class="technique-chip">Social Prod</span>
+            <span class="technique-chip">Mentorship</span>
+            <span class="technique-chip">Totem / Trophy Shelf</span>
           </div>
           <div class="designer-tip" style="border-color:#EC4899">
             <div class="tip-label" style="color:#831843">💡 Designer Tip</div>
@@ -852,7 +1019,7 @@
         <div class="drive-body">
           <p class="drive-desc">Wanting something because you can't have it yet, or because it might disappear. Rarity and exclusivity make things desirable. The "Black Hat" label means this drive creates urgency but can generate anxiety — use carefully.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
               <div class="example-product">👻 Snapchat Stories</div>
               <span class="example-technique" style="background:#F97316">Disappearing Content</span>
@@ -861,7 +1028,7 @@
             <div class="example-card">
               <div class="example-product">🌾 Farmville / Hay Day</div>
               <span class="example-technique" style="background:#F97316">Appointment Dynamics</span>
-              <p class="example-body">Crops that die if not harvested in time force players to return at specific intervals — or pay to skip.</p>
+              <p class="example-body">Crops that die if not harvested on time force players to return at specific intervals — or pay to skip.</p>
             </div>
             <div class="example-card">
               <div class="example-product">✉️ Gmail Beta (2004)</div>
@@ -873,15 +1040,59 @@
               <span class="example-technique" style="background:#F97316">Time-Limited Access</span>
               <p class="example-body">"Only 3 left" + countdown timer combines scarcity and time pressure into a powerful purchase trigger.</p>
             </div>
+            <div class="example-card">
+              <div class="example-product">🏨 Booking.com</div>
+              <span class="example-technique" style="background:#F97316">Magnetic Cap</span>
+              <p class="example-body">"Only 2 rooms left at this price" combines real scarcity with social proof to create urgency.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">👟 Supreme Drops</div>
+              <span class="example-technique" style="background:#F97316">Last Mile Drive</span>
+              <p class="example-body">Weekly limited drops sell out in seconds. Scarcity itself becomes the product's primary selling point.</p>
+            </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Countdown Timer</div>
+              <div style="text-align:center;padding:4px 0">
+                <div style="font-size:1.6rem;font-weight:900;color:#F97316;letter-spacing:-.02em">23:47:12</div>
+                <div style="font-size:.62rem;color:#6b7280">Offer ends soon</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Seat Availability</div>
+              <div>
+                <div style="display:flex;gap:5px;margin-bottom:5px">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#F97316;border:1.5px solid #ea580c"></div>
+                  <div style="width:16px;height:16px;border-radius:50%;background:#F97316;border:1.5px solid #ea580c"></div>
+                  <div style="width:16px;height:16px;border-radius:50%;background:#F97316;border:1.5px solid #ea580c"></div>
+                  <div style="width:16px;height:16px;border-radius:50%;border:1.5px dashed #30363d;background:#0d1117"></div>
+                  <div style="width:16px;height:16px;border-radius:50%;border:1.5px dashed #30363d;background:#0d1117"></div>
+                </div>
+                <div style="font-size:.62rem;color:#F97316">2 seats remain</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Appointment Dynamic</div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <div style="font-size:1.1rem">🌽</div>
+                <div>
+                  <div style="font-size:.65rem;font-weight:700;color:#e6edf3">Ready in 4h 12m</div>
+                  <div style="height:3px;background:#21262d;border-radius:2px;margin-top:3px;overflow:hidden"><div style="width:72%;height:100%;background:#F97316;border-radius:2px"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Appointment dynamics</span>
-            <span class="technique-chip">Torture breaks</span>
-            <span class="technique-chip">Exclusive access</span>
-            <span class="technique-chip">Countdown timers</span>
-            <span class="technique-chip">Moats / waiting lists</span>
-            <span class="technique-chip">The dangling carrot</span>
+            <span class="technique-chip">Dangling / Dangling Carrot</span>
+            <span class="technique-chip">Appointment Dynamics</span>
+            <span class="technique-chip">Fixed Intervals</span>
+            <span class="technique-chip">Lottery</span>
+            <span class="technique-chip">Morning Star Bonus</span>
+            <span class="technique-chip">Last Mile Drive</span>
+            <span class="technique-chip">Magnetic Cap</span>
           </div>
           <div class="designer-tip" style="border-color:#F97316">
             <div class="tip-label" style="color:#7C2D12">💡 Designer Tip</div>
@@ -906,7 +1117,7 @@
         <div class="drive-body">
           <p class="drive-desc">Not knowing what happens next keeps the brain engaged. The dopamine spike from an unexpected reward is larger than from a predictable one. This is the mechanism behind gambling — and also behind great storytelling.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
               <div class="example-product">🎰 Loot Boxes / Gacha</div>
               <span class="example-technique" style="background:#06B6D4">Variable Reward</span>
@@ -919,7 +1130,7 @@
             </div>
             <div class="example-card">
               <div class="example-product">🎵 Spotify Discover Weekly</div>
-              <span class="example-technique" style="background:#06B6D4">Curious Discovery</span>
+              <span class="example-technique" style="background:#06B6D4">Rolling Rewards</span>
               <p class="example-body">A personalized playlist that changes weekly — the anticipation of Monday's discovery creates habitual check-ins.</p>
             </div>
             <div class="example-card">
@@ -927,15 +1138,53 @@
               <span class="example-technique" style="background:#06B6D4">Randomized Reward</span>
               <p class="example-body">Not knowing what's inside is more compelling than the contents. The unboxing is the product.</p>
             </div>
+            <div class="example-card">
+              <div class="example-product">🟩 Wordle</div>
+              <span class="example-technique" style="background:#06B6D4">Glowing Choice</span>
+              <p class="example-body">Each guess reveals partial information — the mystery of the unknown word creates irresistible daily pull.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🎁 Blind Box Toys</div>
+              <span class="example-technique" style="background:#06B6D4">Easter Eggs</span>
+              <p class="example-body">Hidden rare figures in blind box series create obsessive collecting to find the secret variant.</p>
+            </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Scratch Card</div>
+              <div style="background:repeating-linear-gradient(45deg,#21262d,#21262d 3px,#1c2129 3px,#1c2129 6px);border-radius:8px;padding:12px;text-align:center;position:relative">
+                <div style="font-size:1.2rem">🪙</div>
+                <div style="font-size:.62rem;color:#8b949e;margin-top:3px">Scratch to reveal</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Random Reward</div>
+              <div style="text-align:center;padding:4px 0">
+                <div style="font-size:1.4rem;margin-bottom:4px">🎲</div>
+                <div style="font-size:.65rem;font-weight:700;color:#06B6D4">Variable Reward</div>
+                <div style="font-size:.58rem;color:#6b7280;margin-top:2px">Could be 10x, 1x, or 0.5x</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Easter Egg</div>
+              <div style="position:relative;height:50px;background:#0d1117;border-radius:6px;border:1px solid #21262d">
+                <div style="position:absolute;bottom:4px;right:6px;font-size:.85rem;opacity:.4">🥚</div>
+                <div style="font-size:.62rem;color:#8b949e;padding:5px 7px">Regular content</div>
+                <div style="font-size:.55rem;color:#06B6D4;padding:0 7px">You found a hidden feature! ✨</div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Variable rewards</span>
-            <span class="technique-chip">Easter eggs</span>
-            <span class="technique-chip">Glowing choice</span>
-            <span class="technique-chip">Mini-games</span>
-            <span class="technique-chip">Sudden rewards</span>
-            <span class="technique-chip">Narrative mystery</span>
+            <span class="technique-chip">Glowing Choice</span>
+            <span class="technique-chip">Mini Quests</span>
+            <span class="technique-chip">Visual Storytelling</span>
+            <span class="technique-chip">Easter Eggs</span>
+            <span class="technique-chip">Random Rewards</span>
+            <span class="technique-chip">Rolling Rewards</span>
+            <span class="technique-chip">Sudden Rewards</span>
+            <span class="technique-chip">Evolved UI</span>
           </div>
           <div class="designer-tip" style="border-color:#06B6D4">
             <div class="tip-label" style="color:#0E7490">💡 Designer Tip</div>
@@ -960,36 +1209,75 @@
         <div class="drive-body">
           <p class="drive-desc">Avoiding negative outcomes. Fear of losing prior progress, missing an opportunity, or breaking a streak is a powerful motivator — often stronger than gaining something equivalent. This is the most psychologically potent (and risky) drive.</p>
           <div class="examples-label">Real-World Examples</div>
-          <div class="examples-grid">
+          <div class="examples-grid-3col">
             <div class="example-card">
-              <div class="example-product">🦜 Duolingo</div>
-              <span class="example-technique" style="background:#EF4444">Streak Loss</span>
-              <p class="example-body">"You're about to lose your 47-day streak!" is Duolingo's most powerful notification. Progress loss triggers immediate action.</p>
+              <div class="example-product">🦜 Duolingo Streak</div>
+              <span class="example-technique" style="background:#EF4444">Streaks</span>
+              <p class="example-body">Losing a 200-day streak feels catastrophic. The fear of loss motivates daily sessions more than the desire to learn.</p>
             </div>
             <div class="example-card">
-              <div class="example-product">💼 LinkedIn</div>
+              <div class="example-product">👻 Snapchat Streak</div>
+              <span class="example-technique" style="background:#EF4444">Progress Loss</span>
+              <p class="example-body">The snap streak counter creates a mutual obligation — letting it die means failing a social contract.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">💼 LinkedIn Views Drop</div>
+              <span class="example-technique" style="background:#EF4444">FOMO Punch</span>
+              <p class="example-body">"Your profile views dropped 18%" — even if the absolute number is small, decline creates anxiety about lost opportunity.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🌾 Farmville Crops</div>
+              <span class="example-technique" style="background:#EF4444">Sunk Cost Prison</span>
+              <p class="example-body">After investing hours planting, players feel compelled to log in — abandoning the crops means the effort was wasted.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">💳 Premium Expiry</div>
+              <span class="example-technique" style="background:#EF4444">Rightful Heritage</span>
+              <p class="example-body">"Your premium features expire in 3 days" — losing access to something you got used to feels like a downgrade.</p>
+            </div>
+            <div class="example-card">
+              <div class="example-product">🎰 Casino Near-Miss</div>
               <span class="example-technique" style="background:#EF4444">Status Quo Sloth</span>
-              <p class="example-body">Profile incompleteness warnings make users feel their professional credibility is being eroded by inaction.</p>
-            </div>
-            <div class="example-card">
-              <div class="example-product">🛒 E-commerce</div>
-              <span class="example-technique" style="background:#EF4444">Cart Expiry</span>
-              <p class="example-body">"Your cart is about to expire" — the threat of losing saved items (and the effort of finding them again) drives purchase.</p>
-            </div>
-            <div class="example-card">
-              <div class="example-product">📧 Email Unsubscribe</div>
-              <span class="example-technique" style="background:#EF4444">FOMO Warning</span>
-              <p class="example-body">"If you unsubscribe, you'll miss our next exclusive deal." Loss framing outperforms benefit framing in most tests.</p>
+              <p class="example-body">A near-win feels like a near-loss that must be corrected — not leaving "on a loss" keeps players spinning.</p>
             </div>
           </div>
-          <div class="examples-label">Techniques</div>
+          <div class="examples-label">Technique UI Examples</div>
+          <div class="ui-demos-row">
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Streak Tracker</div>
+              <div style="display:flex;align-items:center;gap:6px">
+                <span style="font-size:1.4rem">🔥</span>
+                <div>
+                  <div style="font-size:.95rem;font-weight:900;color:#EF4444">5 day streak</div>
+                  <div style="background:#450a0a;border-radius:4px;padding:2px 6px;font-size:.58rem;color:#fca5a5;margin-top:2px">⚠️ At risk today</div>
+                </div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">Progress Loss Warning</div>
+              <div>
+                <div style="font-size:.62rem;color:#EF4444;font-weight:700;margin-bottom:4px">⚠️ Your level drops in 3 days</div>
+                <div style="height:5px;background:#21262d;border-radius:3px;overflow:hidden"><div style="width:20%;height:100%;background:#EF4444;border-radius:3px;box-shadow:0 0 5px rgba(239,68,68,.5)"></div></div>
+                <div style="font-size:.58rem;color:#6b7280;margin-top:3px">Login streak required to maintain Expert</div>
+              </div>
+            </div>
+            <div class="ui-demo-panel">
+              <div class="ui-demo-label">FOMO Counter</div>
+              <div style="background:#0d1117;border-radius:6px;padding:7px;border-left:2px solid #EF4444">
+                <div style="font-size:.65rem;font-weight:700;color:#fca5a5">🔔 47 profile views this week</div>
+                <div style="font-size:.58rem;color:#EF4444;margin-top:2px">↓ 18% from last week</div>
+              </div>
+            </div>
+          </div>
+          <div class="examples-label">All Techniques</div>
           <div class="techniques-row">
-            <span class="technique-chip">Sunk cost pity</span>
-            <span class="technique-chip">Progress loss warning</span>
-            <span class="technique-chip">Streak protection</span>
-            <span class="technique-chip">Sisyphean enemy</span>
-            <span class="technique-chip">Status quo sloth</span>
-            <span class="technique-chip">Countdown timer</span>
+            <span class="technique-chip">Progress Loss</span>
+            <span class="technique-chip">Status Quo Sloth</span>
+            <span class="technique-chip">Sunk Cost Prison</span>
+            <span class="technique-chip">Rightful Heritage</span>
+            <span class="technique-chip">Countdown Timer</span>
+            <span class="technique-chip">FOMO Punch</span>
+            <span class="technique-chip">Streaks</span>
           </div>
           <div class="designer-tip" style="border-color:#EF4444">
             <div class="tip-label" style="color:#7F1D1D">💡 Designer Tip</div>
@@ -1004,76 +1292,15 @@
     <div class="explorer-sticky">
       <div class="oct-panel">
         <h3>Click a segment to jump</h3>
-        <svg id="oct-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="sidebar-oct-wrap">
+          <svg id="sidebar-oct-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg"
+               style="width:200px;height:200px;cursor:pointer;display:block;margin:0 auto"></svg>
+          <div style="text-align:center;margin-top:8px;font-size:.7rem;color:#6B7280;font-weight:600">Click to jump</div>
+        </div>
         <div class="oct-legend" id="oct-legend"></div>
       </div>
     </div>
   </div><!-- /explorer-wrap -->
-
-  <!-- ── HAT SECTION ─────────────────────────────────────── -->
-  <hr class="section-divider">
-  <section class="hat-section" id="hats">
-    <div class="section" style="padding-top:56px;padding-bottom:56px;">
-      <div class="section-label">Framework Axis</div>
-      <div class="section-title">White Hat vs Black Hat</div>
-      <p class="section-sub">Every Core Drive falls on a spectrum from intrinsically motivating to externally pressuring. Understanding this axis helps you build systems that feel great, not coercive.</p>
-      <div class="hat-grid">
-        <div class="hat-col white">
-          <h3>⬜ White Hat Drives</h3>
-          <p>White Hat drives make users feel powerful, fulfilled, and creative. They generate long-term engagement because the user <em>wants</em> to be there. High White Hat = users evangelize and recommend.</p>
-          <div class="hat-drives">
-            <span class="hat-drive-chip" style="background:#F59E0B">🌟 CD1 Epic Meaning</span>
-            <span class="hat-drive-chip" style="background:#3B82F6">🏆 CD2 Accomplishment</span>
-            <span class="hat-drive-chip" style="background:#8B5CF6">🎨 CD3 Creativity</span>
-            <span class="hat-drive-chip" style="background:#10B981">💎 CD4 Ownership</span>
-            <span class="hat-drive-chip" style="background:#EC4899">👥 CD5 Social</span>
-          </div>
-          <p class="hat-note">✅ Sustainable engagement — users keep coming back because it feels good, not because they're afraid to stop.</p>
-        </div>
-        <div class="hat-col black">
-          <h3>⬛ Black Hat Drives</h3>
-          <p>Black Hat drives create urgency and anxiety. They can be highly effective short-term but lead to burnout, resentment, and churn if overused. Users may stay — but they won't be happy about it.</p>
-          <div class="hat-drives">
-            <span class="hat-drive-chip" style="background:#F97316">⏳ CD6 Scarcity</span>
-            <span class="hat-drive-chip" style="background:#06B6D4">🎲 CD7 Curiosity</span>
-            <span class="hat-drive-chip" style="background:#EF4444">⚠️ CD8 Loss</span>
-          </div>
-          <p class="hat-note">⚠️ Use sparingly and ethically. Always pair with White Hat drives. Never manufacture false urgency or fake scarcity.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── BRAIN SECTION ───────────────────────────────────── -->
-  <section id="brain">
-    <div class="brain-section">
-      <div class="section-label">Framework Axis</div>
-      <div class="section-title">Left Brain vs Right Brain</div>
-      <p class="section-sub">A second axis: whether the drive comes from logic &amp; structure (Left Brain / extrinsic) or from creativity &amp; feelings (Right Brain / intrinsic).</p>
-      <div class="brain-grid">
-        <div class="brain-col left">
-          <h3>🔢 Left Brain — Extrinsic</h3>
-          <p>Logic, ownership, and analytical thinking. Left Brain drives respond to clear metrics, tangible rewards, and structured systems. Users can explain <em>why</em> they're engaged.</p>
-          <div class="brain-drives">
-            <span class="brain-drive-chip" style="background:#3B82F6">🏆 CD2 Accomplishment</span>
-            <span class="brain-drive-chip" style="background:#10B981">💎 CD4 Ownership</span>
-            <span class="brain-drive-chip" style="background:#F97316">⏳ CD6 Scarcity</span>
-            <span class="brain-drive-chip" style="background:#EF4444">⚠️ CD8 Loss</span>
-          </div>
-        </div>
-        <div class="brain-col right">
-          <h3>🧠 Right Brain — Intrinsic</h3>
-          <p>Creativity, emotion, and social connection. Right Brain drives are harder to quantify but create deeper loyalty. Users often can't fully explain why they love the product — they just do.</p>
-          <div class="brain-drives">
-            <span class="brain-drive-chip" style="background:#F59E0B">🌟 CD1 Epic Meaning</span>
-            <span class="brain-drive-chip" style="background:#8B5CF6">🎨 CD3 Creativity</span>
-            <span class="brain-drive-chip" style="background:#EC4899">👥 CD5 Social</span>
-            <span class="brain-drive-chip" style="background:#06B6D4">🎲 CD7 Curiosity</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- ── APPLY SECTION ───────────────────────────────────── -->
   <hr class="section-divider">
@@ -1160,166 +1387,73 @@
       { cd:8, icon:'⚠️', short:'Loss & Avoid',   color:'#EF4444', hat:'black', brain:'left'  },
     ];
 
-    // Segment layout: drive index → which vertex pair [va_idx, vb_idx] (clockwise from top)
-    // vertex i of regular octagon: angle = -90 + i*45 degrees
-    const V_PAIRS = [[7,0],[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]];
-    const SVG_NS = 'http://www.w3.org/2000/svg';
+    // Build compact sidebar octagon (scroll-linked)
+    (function buildSidebarOct() {
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const svg = document.getElementById('sidebar-oct-svg');
+      if (!svg) return;
+      const CX = 120, CY = 120, R = 100;
+      const SIDEBAR_DRIVES = [
+        {cd:1,color:'#F59E0B'},{cd:2,color:'#3B82F6'},{cd:3,color:'#8B5CF6'},
+        {cd:4,color:'#10B981'},{cd:5,color:'#EC4899'},{cd:6,color:'#F97316'},
+        {cd:7,color:'#06B6D4'},{cd:8,color:'#EF4444'}
+      ];
 
-    function degToRad(d) { return d * Math.PI / 180; }
-    function vtx(i, cx, cy, r) {
-      const a = degToRad(-90 + i * 45);
-      return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
-    }
+      function vtxSidebar(i, r) {
+        const a = (-90 + i * 45) * Math.PI / 180;
+        return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
+      }
 
-    function buildOctSVG(svgEl, cx, cy, r, interactive = true) {
-      svgEl.innerHTML = '';
-      const segs = [];
-
-      DRIVES.forEach((drive, i) => {
-        const [ia, ib] = V_PAIRS[i];
-        const va = vtx(ia, cx, cy, r);
-        const vb = vtx(ib, cx, cy, r);
-
-        // Slight inset for gap between segments
-        function inset(pt, f = 0.955) {
-          return { x: cx + (pt.x - cx) * f, y: cy + (pt.y - cy) * f };
-        }
-        const iva = inset(va), ivb = inset(vb);
-
+      SIDEBAR_DRIVES.forEach((d, i) => {
+        const va = vtxSidebar(i, R), vb = vtxSidebar(i + 1, R);
         const poly = document.createElementNS(SVG_NS, 'polygon');
-        poly.setAttribute('points', `${cx},${cy} ${iva.x},${iva.y} ${ivb.x},${ivb.y}`);
-        poly.setAttribute('fill', drive.color);
-        poly.setAttribute('opacity', '0.82');
+        poly.setAttribute('points', `${CX},${CY} ${va.x},${va.y} ${vb.x},${vb.y}`);
+        poly.setAttribute('fill', d.color);
+        poly.setAttribute('opacity', '0.25');
+        poly.setAttribute('stroke', '#fff');
+        poly.setAttribute('stroke-width', '1.5');
+        poly.style.cursor = 'pointer';
         poly.style.transition = 'opacity .2s';
-        poly.setAttribute('data-cd', drive.cd);
-        if (interactive) poly.style.cursor = 'pointer';
-        svgEl.appendChild(poly);
-        segs.push(poly);
+        poly.dataset.cd = d.cd;
 
-        // Label: centroid
-        const cx2 = (cx + va.x + vb.x) / 3;
-        const cy2 = (cy + va.y + vb.y) / 3;
-
-        const txtIcon = document.createElementNS(SVG_NS, 'text');
-        txtIcon.setAttribute('x', cx2);
-        txtIcon.setAttribute('y', cy2 - (r < 180 ? 6 : 10));
-        txtIcon.setAttribute('text-anchor', 'middle');
-        txtIcon.setAttribute('dominant-baseline', 'middle');
-        txtIcon.setAttribute('font-size', r < 180 ? '13' : '20');
-        txtIcon.setAttribute('pointer-events', 'none');
-        txtIcon.textContent = drive.icon;
-        svgEl.appendChild(txtIcon);
-
-        const txtNum = document.createElementNS(SVG_NS, 'text');
-        txtNum.setAttribute('x', cx2);
-        txtNum.setAttribute('y', cy2 + (r < 180 ? 10 : 16));
-        txtNum.setAttribute('text-anchor', 'middle');
-        txtNum.setAttribute('fill', 'rgba(255,255,255,0.92)');
-        txtNum.setAttribute('font-size', r < 180 ? '8' : '11');
-        txtNum.setAttribute('font-weight', '800');
-        txtNum.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
-        txtNum.setAttribute('pointer-events', 'none');
-        txtNum.textContent = `CD${drive.cd}`;
-        svgEl.appendChild(txtNum);
-
-        // Interaction
-        if (interactive) {
-          poly.addEventListener('mouseenter', () => { poly.setAttribute('opacity', '1'); });
-          poly.addEventListener('mouseleave', () => {
-            if (!poly.classList.contains('oct-active')) poly.setAttribute('opacity', '0.82');
-          });
-          poly.addEventListener('click', () => {
-            const card = document.getElementById(`drive-${drive.cd}`);
-            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          });
-        }
+        poly.addEventListener('mouseenter', () => {
+          if (!poly.classList.contains('oct-active')) poly.setAttribute('opacity','0.7');
+        });
+        poly.addEventListener('mouseleave', () => {
+          if (!poly.classList.contains('oct-active')) poly.setAttribute('opacity','0.25');
+        });
+        poly.addEventListener('click', () => {
+          const card = document.getElementById(`drive-${d.cd}`);
+          if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        svg.appendChild(poly);
       });
 
-      // Hat divider line (horizontal through center — between CD5 bottom and CD1 top)
-      const divLine = document.createElementNS(SVG_NS, 'line');
-      divLine.setAttribute('x1', cx - r * 0.95);
-      divLine.setAttribute('x2', cx + r * 0.95);
-      divLine.setAttribute('y1', cy);
-      divLine.setAttribute('y2', cy);
-      divLine.setAttribute('stroke', 'white');
-      divLine.setAttribute('stroke-width', '1.5');
-      divLine.setAttribute('stroke-dasharray', '4,3');
-      divLine.setAttribute('opacity', '0.4');
-      divLine.setAttribute('pointer-events', 'none');
-      svgEl.appendChild(divLine);
+      // Center circle + label
+      const c = document.createElementNS(SVG_NS, 'circle');
+      c.setAttribute('cx', CX); c.setAttribute('cy', CY);
+      c.setAttribute('r', '36'); c.setAttribute('fill', '#F2F5F9');
+      c.setAttribute('stroke', '#E5E7EB'); c.setAttribute('stroke-width', '1');
+      svg.appendChild(c);
 
-      // Hat labels on divider
-      function makeHatLabel(txt, x, y, fill) {
-        const bg = document.createElementNS(SVG_NS, 'rect');
-        bg.setAttribute('x', x - 22);
-        bg.setAttribute('y', y - 9);
-        bg.setAttribute('width', 44);
-        bg.setAttribute('height', 16);
-        bg.setAttribute('rx', 4);
-        bg.setAttribute('fill', 'white');
-        bg.setAttribute('opacity', '0.85');
-        bg.setAttribute('pointer-events', 'none');
-        svgEl.appendChild(bg);
+      const t = document.createElementNS(SVG_NS, 'text');
+      t.setAttribute('x', CX); t.setAttribute('y', CY + 1);
+      t.setAttribute('text-anchor', 'middle'); t.setAttribute('dominant-baseline', 'middle');
+      t.setAttribute('font-size', '9'); t.setAttribute('font-weight', '900');
+      t.setAttribute('fill', '#374151'); t.setAttribute('font-family', 'system-ui, sans-serif');
+      t.setAttribute('pointer-events', 'none');
+      t.textContent = 'OCT';
+      svg.appendChild(t);
 
-        const t = document.createElementNS(SVG_NS, 'text');
-        t.setAttribute('x', x);
-        t.setAttribute('y', y + 2);
-        t.setAttribute('text-anchor', 'middle');
-        t.setAttribute('fill', fill);
-        t.setAttribute('font-size', r < 180 ? '6' : '8');
-        t.setAttribute('font-weight', '800');
-        t.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
-        t.setAttribute('letter-spacing', '0.5');
-        t.setAttribute('pointer-events', 'none');
-        t.textContent = txt;
-        svgEl.appendChild(t);
-      }
-      if (r >= 180) {
-        makeHatLabel('WHITE HAT ▲', cx, cy - 6, '#16A34A');
-        makeHatLabel('BLACK HAT ▼', cx, cy + 13, '#374151');
-      }
-
-      // Center circle
-      const cCircle = document.createElementNS(SVG_NS, 'circle');
-      cCircle.setAttribute('cx', cx);
-      cCircle.setAttribute('cy', cy);
-      cCircle.setAttribute('r', r < 180 ? 28 : 38);
-      cCircle.setAttribute('fill', 'white');
-      cCircle.setAttribute('pointer-events', 'none');
-      svgEl.appendChild(cCircle);
-
-      const cText = document.createElementNS(SVG_NS, 'text');
-      cText.setAttribute('x', cx);
-      cText.setAttribute('y', cy - (r < 180 ? 3 : 5));
-      cText.setAttribute('text-anchor', 'middle');
-      cText.setAttribute('font-size', r < 180 ? '6.5' : '9');
-      cText.setAttribute('font-weight', '900');
-      cText.setAttribute('fill', '#374151');
-      cText.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
-      cText.setAttribute('letter-spacing', '0.3');
-      cText.setAttribute('pointer-events', 'none');
-      cText.textContent = 'OCTALYSIS';
-      svgEl.appendChild(cText);
-
-      const cSub = document.createElementNS(SVG_NS, 'text');
-      cSub.setAttribute('x', cx);
-      cSub.setAttribute('y', cy + (r < 180 ? 8 : 11));
-      cSub.setAttribute('text-anchor', 'middle');
-      cSub.setAttribute('font-size', r < 180 ? '4.5' : '6.5');
-      cSub.setAttribute('fill', '#9CA3AF');
-      cSub.setAttribute('font-family', 'Segoe UI, system-ui, sans-serif');
-      cSub.setAttribute('pointer-events', 'none');
-      cSub.textContent = 'Yu-kai Chou';
-      svgEl.appendChild(cSub);
-
-      return segs;
-    }
-
-    // Build hero octagon (decorative)
-    buildOctSVG(document.getElementById('hero-svg'), 200, 200, 175, false);
-
-    // Build interactive explorer octagon
-    const octSegs = buildOctSVG(document.getElementById('oct-svg'), 200, 200, 170, true);
+      // Expose highlight function for IntersectionObserver
+      window._highlightOctSeg = function(activeCd) {
+        svg.querySelectorAll('polygon').forEach(p => {
+          const isActive = +p.dataset.cd === activeCd;
+          p.setAttribute('opacity', isActive ? '1' : '0.25');
+          p.classList.toggle('oct-active', isActive);
+        });
+      };
+    })();
 
     // Build legend
     const legendEl = document.getElementById('oct-legend');
@@ -1339,27 +1473,26 @@
       // Remove old active states
       document.querySelectorAll('.drive-card').forEach(c => c.classList.remove('active-card'));
       document.querySelectorAll('.oct-legend-item').forEach(l => l.classList.remove('active'));
-      octSegs.forEach(s => { s.setAttribute('opacity', '0.82'); s.classList.remove('oct-active'); });
 
       // Activate new
       const card = document.getElementById(`drive-${cd}`);
       if (card) card.classList.add('active-card');
       const legItem = document.getElementById(`leg-${cd}`);
       if (legItem) legItem.classList.add('active');
-      const seg = octSegs.find(s => parseInt(s.getAttribute('data-cd')) === cd);
-      if (seg) { seg.setAttribute('opacity', '1'); seg.classList.add('oct-active'); }
+      if (window._highlightOctSeg) window._highlightOctSeg(cd);
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const driveObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const cd = parseInt(entry.target.id.replace('drive-',''));
+          const id = entry.target.id; // e.g. "drive-3"
+          const cd = parseInt(id.replace('drive-', ''), 10);
           if (!isNaN(cd)) activateCard(cd);
         }
       });
-    }, { threshold: 0.35, rootMargin: '-10% 0px -10% 0px' });
+    }, { threshold: 0.3 });
 
-    document.querySelectorAll('.drive-card').forEach(card => observer.observe(card));
+    document.querySelectorAll('[id^="drive-"]').forEach(el => driveObserver.observe(el));
 
     // Nav link smooth scroll + active
     document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
@@ -1371,6 +1504,109 @@
         link.classList.add('active');
       });
     });
+
+    (function buildSpokeRing() {
+      const SVG_NS = 'http://www.w3.org/2000/svg';
+      const svg = document.getElementById('ring-svg');
+      if (!svg) return;
+      const CX = 400, CY = 400, R_OUTER = 200, R_INNER = 130;
+
+      function vtx(i, r) {
+        const a = (-90 + i * 45) * Math.PI / 180;
+        return { x: CX + r * Math.cos(a), y: CY + r * Math.sin(a) };
+      }
+      function octPts(r) {
+        return Array.from({length:8}, (_,i) => { const v=vtx(i,r); return `${v.x},${v.y}`; }).join(' ');
+      }
+
+      // Spokes (behind ring) — draw first so they appear behind everything
+      const cardPos = [
+        {x:400,y:66},{x:655,y:170},{x:726,y:400},{x:655,y:630},
+        {x:400,y:734},{x:145,y:630},{x:74,y:400},{x:145,y:170}
+      ];
+      cardPos.forEach((pos, i) => {
+        const v = vtx(i, R_OUTER);
+        const line = document.createElementNS(SVG_NS, 'line');
+        line.setAttribute('x1', v.x); line.setAttribute('y1', v.y);
+        line.setAttribute('x2', pos.x); line.setAttribute('y2', pos.y);
+        line.setAttribute('stroke', '#93c5fd');
+        line.setAttribute('stroke-width', '1.5');
+        line.setAttribute('stroke-dasharray', '4,3');
+        svg.appendChild(line);
+      });
+
+      // Glow shadow (above spokes, below ring)
+      const shadow = document.createElementNS(SVG_NS, 'polygon');
+      shadow.setAttribute('points', octPts(R_OUTER + 6));
+      shadow.setAttribute('fill', 'none');
+      shadow.setAttribute('stroke', 'rgba(37,99,235,.12)');
+      shadow.setAttribute('stroke-width', '14');
+      shadow.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(shadow);
+
+      // Outer ring
+      const outer = document.createElementNS(SVG_NS, 'polygon');
+      outer.setAttribute('points', octPts(R_OUTER));
+      outer.setAttribute('fill', '#2563EB');
+      outer.setAttribute('stroke', '#1d4ed8');
+      outer.setAttribute('stroke-width', '1');
+      outer.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(outer);
+
+      // Inner cutout
+      const inner = document.createElementNS(SVG_NS, 'circle');
+      inner.setAttribute('cx', CX); inner.setAttribute('cy', CY);
+      inner.setAttribute('r', R_INNER);
+      inner.setAttribute('fill', '#F2F5F9');
+      svg.appendChild(inner);
+
+      // Inner edge border
+      const innerEdge = document.createElementNS(SVG_NS, 'polygon');
+      innerEdge.setAttribute('points', octPts(R_INNER + 4));
+      innerEdge.setAttribute('fill', 'none');
+      innerEdge.setAttribute('stroke', '#1d4ed8');
+      innerEdge.setAttribute('stroke-width', '1.5');
+      innerEdge.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(innerEdge);
+
+      // Number nodes on ring
+      for (let i = 0; i < 8; i++) {
+        const mid = vtx(i + 0.5, (R_OUTER + R_INNER) / 2);
+        const c = document.createElementNS(SVG_NS, 'circle');
+        c.setAttribute('cx', mid.x); c.setAttribute('cy', mid.y);
+        c.setAttribute('r', '16'); c.setAttribute('fill', '#1d4ed8');
+        svg.appendChild(c);
+        const t = document.createElementNS(SVG_NS, 'text');
+        t.setAttribute('x', mid.x); t.setAttribute('y', mid.y + 1);
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('dominant-baseline', 'middle');
+        t.setAttribute('font-size', '11'); t.setAttribute('font-weight', '900');
+        t.setAttribute('fill', 'white');
+        t.setAttribute('font-family', 'system-ui, sans-serif');
+        t.setAttribute('pointer-events', 'none');
+        t.textContent = i + 1;
+        svg.appendChild(t);
+      }
+
+      // Center label
+      const ct = document.createElementNS(SVG_NS, 'text');
+      ct.setAttribute('x', CX); ct.setAttribute('y', CY - 7);
+      ct.setAttribute('text-anchor', 'middle'); ct.setAttribute('dominant-baseline', 'middle');
+      ct.setAttribute('font-size', '13'); ct.setAttribute('font-weight', '900');
+      ct.setAttribute('fill', '#1e40af'); ct.setAttribute('font-family', 'system-ui, sans-serif');
+      ct.setAttribute('pointer-events', 'none');
+      ct.textContent = 'OCTALYSIS';
+      svg.appendChild(ct);
+
+      const cs = document.createElementNS(SVG_NS, 'text');
+      cs.setAttribute('x', CX); cs.setAttribute('y', CY + 13);
+      cs.setAttribute('text-anchor', 'middle'); cs.setAttribute('dominant-baseline', 'middle');
+      cs.setAttribute('font-size', '9'); cs.setAttribute('fill', '#93c5fd');
+      cs.setAttribute('font-family', 'system-ui, sans-serif');
+      cs.setAttribute('pointer-events', 'none');
+      cs.textContent = 'Yu-kai Chou';
+      svg.appendChild(cs);
+    })();
   </script>
 </body>
 </html>
