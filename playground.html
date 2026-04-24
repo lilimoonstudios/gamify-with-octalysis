@@ -194,7 +194,10 @@ const DRIVES = [
     hat:'⬜ White Hat', brain:'🔢 Left Brain',
     desc:'The drive to accumulate and protect things you own. Collection, virtual currency, and customisation trigger this drive deeply.',
     tabs:[
-      {name:'Passport Stamps', render:()=>renderPassportStamps(), init:()=>initPassportStamps()},
+      {name:'Passport Stamps',    render:()=>renderPassportStamps(),  init:()=>initPassportStamps()},
+      {name:'Avatar Builder',     render:()=>renderAvatarBuilder(),   init:()=>{}},
+      {name:'Virtual Goods',      render:()=>renderVirtualGoods(),    init:()=>initVirtualGoods()},
+      {name:'Build from Scratch', render:()=>renderBuildFromScratch(),init:()=>initBuildFromScratch()},
     ]},
   { cd:5, name:'Social Influence & Relatedness', icon:'👥', color:'#EC4899',
     hat:'⬜ White Hat', brain:'🧠 Right Brain',
@@ -1013,6 +1016,146 @@ window.claimStamp = function(cd) {
 };
 
 function initPassportStamps() {}
+
+// ── CD4: Avatar Builder ──────────────────────────────────────────
+const AVATAR_OPTIONS = {
+  skin:      ['🟡','🟤','⬜'],
+  hair:      ['👱','🧑','👩‍🦱','🧔'],
+  accessory: ['🕶️','🎩','👑','—'],
+};
+const AVATAR_KEY = 'octalysis_avatar';
+
+function getAvatarState() {
+  try { return JSON.parse(localStorage.getItem(AVATAR_KEY)) || {skin:0,hair:0,accessory:3}; } catch { return {skin:0,hair:0,accessory:3}; }
+}
+function saveAvatarState(s) { try { localStorage.setItem(AVATAR_KEY, JSON.stringify(s)); } catch {} }
+
+function renderAvatarBuilder() {
+  const state = getAvatarState();
+  return `
+  <div class="demo-title">Avatar Builder</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="text-align:center;font-size:3.5rem;margin:8px 0 16px;line-height:1" id="avatar-preview">
+      ${AVATAR_OPTIONS.skin[state.skin]}${AVATAR_OPTIONS.hair[state.hair]}${state.accessory < 3 ? AVATAR_OPTIONS.accessory[state.accessory] : ''}
+    </div>
+    ${['skin','hair','accessory'].map(cat=>`
+    <div style="margin-bottom:12px">
+      <div style="font-size:.62rem;text-transform:uppercase;letter-spacing:.6px;color:#6b7280;margin-bottom:6px">${cat}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${AVATAR_OPTIONS[cat].map((opt,i)=>`
+        <button onclick="avatarPick('${cat}',${i})" id="av-${cat}-${i}"
+          style="font-size:1.2rem;padding:6px 10px;border-radius:8px;border:2px solid ${getAvatarState()[cat]===i?'#10B981':'#30363d'};background:#161b22;cursor:pointer;transition:border-color .15s">
+          ${opt}
+        </button>`).join('')}
+      </div>
+    </div>`).join('')}
+    <div style="font-size:.62rem;color:#6b7280;text-align:center;margin-top:4px">Changes saved in browser</div>
+  </div>`;
+}
+
+window.avatarPick = function(cat, idx) {
+  const state = getAvatarState();
+  state[cat] = idx;
+  saveAvatarState(state);
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    const tabBarHtml = tabBar ? tabBar.outerHTML : '';
+    demoEl.innerHTML = tabBarHtml + renderAvatarBuilder();
+  }
+};
+
+// ── CD4: Virtual Goods ───────────────────────────────────────────
+const SHOP_ITEMS = [
+  {id:'badge-gold',  name:'Gold Badge',  icon:'🏅', price:50,  desc:'Rare'},
+  {id:'theme-dark',  name:'Dark Theme',  icon:'🎨', price:80,  desc:'Cosmetic'},
+  {id:'boost-xp',    name:'XP Booster', icon:'⚡', price:120, desc:'Power-up'},
+];
+let shopCoins = 200;
+let shopOwned = new Set();
+
+function renderVirtualGoods() {
+  return `
+  <div class="demo-title">Virtual Goods</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span style="font-size:.78rem;font-weight:700;color:#e6edf3">Shop</span>
+      <span style="font-size:.75rem;font-weight:700;color:#F59E0B">🪙 <span id="shop-coins">${shopCoins}</span> coins</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${SHOP_ITEMS.map(item=>`
+      <div style="display:flex;align-items:center;gap:10px;background:#161b22;border:1px solid ${shopOwned.has(item.id)?'#10B981':'#30363d'};border-radius:8px;padding:10px 12px">
+        <span style="font-size:1.4rem">${item.icon}</span>
+        <div style="flex:1">
+          <div style="font-size:.78rem;font-weight:700;color:#e6edf3">${item.name}</div>
+          <div style="font-size:.62rem;color:#6b7280">${item.desc}</div>
+        </div>
+        ${shopOwned.has(item.id)
+          ? `<span style="font-size:.7rem;font-weight:700;color:#10B981">✓ Owned</span>`
+          : `<button onclick="shopBuy('${item.id}')" style="background:#F59E0B;color:#111;border:none;border-radius:6px;padding:5px 12px;font-size:.72rem;font-weight:700;cursor:pointer">${item.price} 🪙</button>`}
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+window.shopBuy = function(id) {
+  const item = SHOP_ITEMS.find(i=>i.id===id);
+  if (!item || shopCoins < item.price || shopOwned.has(id)) return;
+  shopCoins -= item.price;
+  shopOwned.add(id);
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    const tabBarHtml = tabBar ? tabBar.outerHTML : '';
+    demoEl.innerHTML = tabBarHtml + renderVirtualGoods();
+  }
+};
+
+function initVirtualGoods() { shopCoins=200; shopOwned=new Set(); }
+
+// ── CD4: Build from Scratch ──────────────────────────────────────
+const BUILD_BLOCKS = ['🧱','🪟','🚪','🏠','🌳'];
+let buildPlaced = [];
+
+function renderBuildFromScratch() {
+  return `
+  <div class="demo-title">Build from Scratch</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="font-size:.68rem;color:#6b7280;margin-bottom:10px">Click blocks to place them. Build your house!</div>
+    <div id="build-canvas" style="min-height:80px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:10px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;align-items:center">
+      ${buildPlaced.length ? buildPlaced.map(b=>`<span style="font-size:1.6rem">${b}</span>`).join('') : '<span style="font-size:.75rem;color:#6b7280">Your build appears here…</span>'}
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:10px">
+      ${BUILD_BLOCKS.map(b=>`<button onclick="buildPlace('${b}')" style="font-size:1.4rem;padding:8px;border-radius:8px;border:1px solid #30363d;background:#161b22;cursor:pointer;transition:transform .1s" onmouseenter="this.style.transform='scale(1.15)'" onmouseleave="this.style.transform=''">${b}</button>`).join('')}
+    </div>
+    <button onclick="buildReset()" style="background:#21262d;color:#8b949e;border:1px solid #30363d;border-radius:7px;padding:6px 16px;font-size:.72rem;cursor:pointer;width:100%">↺ Reset</button>
+    <div id="build-reward" style="display:none;text-align:center;margin-top:10px;padding:10px;background:#064e3b;border:1px solid #059669;border-radius:8px">
+      <span style="font-size:.78rem;font-weight:700;color:#6ee7b7">🏠 House built! You created something from nothing.</span>
+    </div>
+  </div>`;
+}
+
+window.buildPlace = function(block) {
+  buildPlaced.push(block);
+  const canvas = document.getElementById('build-canvas');
+  if (canvas) canvas.innerHTML = buildPlaced.map(b=>`<span style="font-size:1.6rem">${b}</span>`).join('');
+  if (buildPlaced.includes('🏠')) {
+    const reward = document.getElementById('build-reward');
+    if (reward) reward.style.display = 'block';
+  }
+};
+
+window.buildReset = function() {
+  buildPlaced = [];
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    const tabBarHtml = tabBar ? tabBar.outerHTML : '';
+    demoEl.innerHTML = tabBarHtml + renderBuildFromScratch();
+  }
+};
+
+function initBuildFromScratch() { buildPlaced = []; }
 
 // ── CD5: Live Pulse ──────────────────────────────────────────
 const PULSE_MSGS = [
