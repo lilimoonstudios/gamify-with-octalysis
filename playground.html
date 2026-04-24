@@ -230,7 +230,10 @@ const DRIVES = [
     hat:'⬛ Black Hat', brain:'🔢 Left Brain',
     desc:'The drive to avoid losing what you already have. Streaks at risk, expiring progress, and FOMO are powerful motivators.',
     tabs:[
-      {name:'Streak Tracker', render:()=>renderStreakTracker(), init:()=>initStreakTracker()},
+      {name:'Streak Tracker', render:()=>renderStreakTracker(),  init:()=>initStreakTracker()},
+      {name:'Progress Loss',  render:()=>renderProgressLoss(),   init:()=>initProgressLoss()},
+      {name:'FOMO Punch',     render:()=>renderFOMOPunch(),      init:()=>initFOMOPunch()},
+      {name:'Sunk Cost',      render:()=>renderSunkCost(),       init:()=>{}},
     ]},
 ];
 
@@ -1798,6 +1801,155 @@ window.keepStreak = function() {
 };
 
 function initStreakTracker() { streakKept = false; }
+
+// ── CD8: Progress Loss ───────────────────────────────────────────
+// lossInterval declared in Task 1
+let lossXP       = 780;
+let lossDraining = true;
+
+function renderProgressLoss() {
+  return `
+  <div class="demo-title">Progress Loss</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d">
+    <div style="font-size:.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Your Progress</div>
+    <div style="font-size:.88rem;font-weight:800;color:#e6edf3;margin-bottom:12px">Your XP is draining — act now!</div>
+    <div style="display:flex;justify-content:space-between;font-size:.65rem;margin-bottom:4px">
+      <span style="color:#6b7280">Level 4</span>
+      <span id="loss-label" style="color:#EF4444;font-weight:700">${lossXP} / 1000 XP</span>
+    </div>
+    <div style="height:14px;background:#21262d;border-radius:7px;overflow:hidden;margin-bottom:6px">
+      <div id="loss-bar" style="width:${lossXP/10}%;height:100%;background:linear-gradient(90deg,#EF4444,#F97316);border-radius:7px;transition:width .5s;box-shadow:0 0 10px rgba(239,68,68,.3)"></div>
+    </div>
+    <div id="loss-warning" style="font-size:.65rem;color:#EF4444;margin-bottom:16px">⚠️ Losing 1 XP/sec — complete a task to stop the drain</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      ${[['📝 Review your notes',30],['🎯 Answer a quiz',50]].map(([t,xp])=>`
+      <div onclick="lossAct(${xp},this)" style="display:flex;justify-content:space-between;align-items:center;background:#2d0a0a;border:1px solid #7f1d1d;border-radius:8px;padding:9px 12px;cursor:pointer;transition:opacity .2s">
+        <span style="font-size:.78rem;color:#fca5a5">${t}</span>
+        <span style="font-size:.68rem;font-weight:700;color:#EF4444">+${xp} XP &amp; stop drain</span>
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+window.lossAct = function(xp, el) {
+  if (el.dataset.done) return;
+  el.dataset.done='1'; el.style.opacity='.4'; el.style.pointerEvents='none';
+  lossDraining = false;
+  if (lossInterval) { clearInterval(lossInterval); lossInterval=null; }
+  lossXP = Math.min(lossXP+xp, 1000);
+  const bar = document.getElementById('loss-bar');
+  const lbl = document.getElementById('loss-label');
+  const warn= document.getElementById('loss-warning');
+  if (bar) bar.style.width=(lossXP/10)+'%';
+  if (lbl) { lbl.textContent=lossXP+' / 1000 XP'; lbl.style.color='#10B981'; }
+  if (warn) { warn.textContent='✓ Drain stopped! Progress secured.'; warn.style.color='#10B981'; }
+};
+
+function initProgressLoss() {
+  lossXP=780; lossDraining=true;
+  if(lossInterval){clearInterval(lossInterval);lossInterval=null;}
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar?tabBar.outerHTML:'') + renderProgressLoss();
+  }
+  lossInterval = setInterval(()=>{
+    if (!lossDraining) return;
+    const bar = document.getElementById('loss-bar');
+    const lbl = document.getElementById('loss-label');
+    if (!bar) { clearInterval(lossInterval); lossInterval=null; return; }
+    lossXP = Math.max(0, lossXP-1);
+    bar.style.width=(lossXP/10)+'%';
+    if (lbl) lbl.textContent=lossXP+' / 1000 XP';
+  }, 1000);
+}
+
+// ── CD8: FOMO Punch ──────────────────────────────────────────────
+// fomoInterval declared in Task 1
+const FOMO_EVENTS = [
+  {flag:'🇧🇷', msg:'<strong>Carlos</strong> just unlocked Expert tier'},
+  {flag:'🇯🇵', msg:'<strong>Hana</strong> claimed the last Workshop seat'},
+  {flag:'🇩🇪', msg:'<strong>Lukas</strong> earned the Boss Slayer trophy'},
+  {flag:'🇰🇷', msg:'<strong>Ji-woo</strong> hit a 30-day streak'},
+  {flag:'🇫🇷', msg:'<strong>Claire</strong> reached #1 on the Leaderboard'},
+  {flag:'🇮🇳', msg:'<strong>Aryan</strong> completed all 8 Core Drive demos'},
+];
+let fomoCount = 0;
+
+function renderFOMOPunch() {
+  return `
+  <div class="demo-title">FOMO Punch</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+      <div style="width:8px;height:8px;border-radius:50%;background:#EF4444;box-shadow:0 0 6px #EF4444;animation:pulse-dot 1.2s infinite"></div>
+      <span style="font-size:.72rem;font-weight:700;color:#EF4444">Live Activity</span>
+    </div>
+    <div id="fomo-feed" style="display:flex;flex-direction:column;gap:6px;max-height:190px;overflow:hidden"></div>
+    <div style="margin-top:10px;background:#2d0a0a;border:1px solid #7f1d1d;border-radius:8px;padding:8px 12px;text-align:center;font-size:.72rem;color:#f87171;font-weight:700">
+      ⏰ <span id="fomo-count">0</span> people acted while you read this
+    </div>
+  </div>`;
+}
+
+function fomoAddMsg() {
+  const feed = document.getElementById('fomo-feed');
+  if (!feed) { clearInterval(fomoInterval); fomoInterval=null; return; }
+  const ev = FOMO_EVENTS[Math.floor(Math.random()*FOMO_EVENTS.length)];
+  const row = document.createElement('div');
+  row.style.cssText='display:flex;align-items:center;gap:8px;background:#2d0a0a;border:1px solid #7f1d1d;border-radius:7px;padding:8px 10px;opacity:0;transition:opacity .3s';
+  row.innerHTML=`<span style="flex-shrink:0;font-size:1rem">${ev.flag}</span><span style="font-size:.75rem;color:#fca5a5;flex:1">${ev.msg}</span><span style="font-size:.62rem;color:#6b7280;flex-shrink:0">just now</span>`;
+  feed.insertBefore(row, feed.firstChild);
+  requestAnimationFrame(()=>row.style.opacity='1');
+  while(feed.children.length>4) feed.removeChild(feed.lastChild);
+  fomoCount++;
+  const cEl = document.getElementById('fomo-count');
+  if (cEl) cEl.textContent = fomoCount;
+}
+
+function initFOMOPunch() {
+  fomoCount=0;
+  if(fomoInterval){clearInterval(fomoInterval);fomoInterval=null;}
+  fomoInterval=setInterval(fomoAddMsg,1800);
+  fomoAddMsg();
+}
+
+// ── CD8: Sunk Cost Prison ────────────────────────────────────────
+function renderSunkCost() {
+  return `
+  <div class="demo-title">Sunk Cost Prison</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d">
+    <div style="text-align:center;font-size:.78rem;color:#8b949e;margin-bottom:14px">Here's everything you'd lose if you quit today:</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+      ${[
+        ['⏱','4 hours','of learning invested'],
+        ['🏅','3 badges','earned over 2 weeks'],
+        ['🔥','12-day streak','would reset to zero'],
+        ['⭐','Level 5','drops back to Level 3'],
+        ['🏆','#2 on Leaderboard','gone by tomorrow'],
+      ].map(([icon,stat,desc])=>`
+      <div style="display:flex;align-items:center;gap:10px;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:9px 12px">
+        <span style="font-size:1.2rem">${icon}</span>
+        <div>
+          <div style="font-size:.8rem;font-weight:700;color:#EF4444">${stat}</div>
+          <div style="font-size:.65rem;color:#6b7280">${desc}</div>
+        </div>
+      </div>`).join('')}
+    </div>
+    <button onclick="sunkQuit()" id="sunk-quit-btn" style="width:100%;background:#21262d;color:#6b7280;border:1px solid #30363d;border-radius:8px;padding:9px;font-size:.8rem;cursor:pointer">
+      Still want to quit?
+    </button>
+    <div id="sunk-msg" style="display:none;margin-top:10px;padding:10px;background:#2d0a0a;border:1px solid #7f1d1d;border-radius:8px;text-align:center;font-size:.75rem;color:#fca5a5">
+      Are you sure? You've come so far… most people stay.
+    </div>
+  </div>`;
+}
+
+window.sunkQuit = function() {
+  const msg = document.getElementById('sunk-msg');
+  const btn = document.getElementById('sunk-quit-btn');
+  if (msg) msg.style.display='block';
+  if (btn) { btn.textContent="I'm staying 💪"; btn.style.background='#10B981'; btn.style.color='#fff'; btn.style.borderColor='#059669'; btn.onclick=null; }
+};
 </script>
 </body>
 </html>
