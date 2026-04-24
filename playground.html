@@ -282,7 +282,7 @@ function clearAllIntervals() {
 // ── Tab bar renderer ────────────────────────────────────────────
 function renderTabBar(d, activeIdx) {
   return d.tabs.map((t, i) =>
-    `<button class="tab-btn${i===activeIdx?' active':''}"
+    `<button class="tab-btn"
       style="${i===activeIdx?`border-bottom-color:${d.color};color:${d.color}`:''}"
       onclick="switchTab(${d.cd},${i})">${t.name}</button>`
   ).join('');
@@ -335,35 +335,6 @@ function activateDrive(cd) {
 
   // Render demo panel
   activateTab(cd, 0);
-}
-
-// ── Demo renderer (returns HTML string) ─────────────────────────
-function renderDemo(cd) {
-  const demos = {
-    1: renderMissionCounter,
-    2: renderXPLevelUp,
-    3: renderComboBuilder,
-    4: renderPassportStamps,
-    5: renderLivePulse,
-    6: renderEventTicket,
-    7: renderScratchCard,
-    8: renderStreakTracker,
-  };
-  return demos[cd] ? demos[cd]() : '<div class="demo-empty">Demo coming soon</div>';
-}
-
-function initDemo(cd) {
-  const inits = {
-    1: () => {},
-    2: initXPLevelUp,
-    3: initComboBuilder,
-    4: initPassportStamps,
-    5: initLivePulse,
-    6: initEventTicket,
-    7: initScratchCard,
-    8: initStreakTracker,
-  };
-  if (inits[cd]) inits[cd]();
 }
 
 // ── CD1: Mission Counter ─────────────────────────────────────────
