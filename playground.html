@@ -168,6 +168,9 @@ const DRIVES = [
     desc:'The belief that you are doing something greater than yourself. When users feel chosen for a mission, effort becomes purposeful.',
     tabs:[
       {name:'Mission Counter', render:()=>renderMissionCounter(), init:()=>{}},
+      {name:'Narrative',       render:()=>renderNarrative(),      init:()=>initNarrative()},
+      {name:'Humanity Hero',   render:()=>renderHumanityHero(),   init:()=>{}},
+      {name:'Co-creationist',  render:()=>renderCoCreationist(),  init:()=>initCoCreationist()},
     ]},
   { cd:2, name:'Development & Accomplishment', icon:'🏆', color:'#3B82F6',
     hat:'⬜ White Hat', brain:'🔢 Left Brain',
@@ -366,6 +369,137 @@ window.addVoice = function() {
   el.style.color = '#fff';
   setTimeout(() => { el.style.transform = ''; el.style.color = '#F59E0B'; }, 300);
 };
+
+// ── CD1: Narrative ───────────────────────────────────────────────
+const NARRATIVE_LINES = [
+  '🌍 Every great product starts with a problem worth solving.',
+  '💡 Somewhere, a designer saw friction where others saw routine.',
+  '🛠 They built slowly, tested often, and listened carefully.',
+  '🚀 And one day — it shipped. Not perfect, but real.',
+  '🌐 That\'s how missions are born. What\'s yours?',
+];
+let narrativeIdx = 0;
+
+function renderNarrative() {
+  return `
+  <div class="demo-title">Narrative</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d">
+    <div style="font-size:.65rem;color:#6b7280;letter-spacing:.8px;text-transform:uppercase;margin-bottom:12px">The Origin Story</div>
+    <div id="narrative-lines" style="min-height:80px;margin-bottom:16px"></div>
+    <button onclick="advanceNarrative()" id="narrative-btn"
+      style="background:#F59E0B;color:#111;border:none;border-radius:8px;padding:8px 20px;font-size:.82rem;font-weight:700;cursor:pointer">
+      ▶ Begin
+    </button>
+  </div>`;
+}
+
+window.advanceNarrative = function() {
+  if (narrativeIdx >= NARRATIVE_LINES.length) return;
+  const linesEl = document.getElementById('narrative-lines');
+  if (!linesEl) return;
+  const line = document.createElement('p');
+  line.style.cssText = 'font-size:.85rem;color:#e6edf3;line-height:1.7;margin-bottom:6px;opacity:0;transition:opacity .4s';
+  line.textContent = NARRATIVE_LINES[narrativeIdx];
+  linesEl.appendChild(line);
+  requestAnimationFrame(() => line.style.opacity = '1');
+  narrativeIdx++;
+  const btn = document.getElementById('narrative-btn');
+  if (!btn) return;
+  btn.textContent = narrativeIdx >= NARRATIVE_LINES.length ? '✓ Story Complete' : '▶ Next Chapter';
+  if (narrativeIdx >= NARRATIVE_LINES.length) { btn.disabled = true; btn.style.opacity = '.5'; }
+};
+
+function initNarrative() { narrativeIdx = 0; }
+
+// ── CD1: Humanity Hero ───────────────────────────────────────────
+function renderHumanityHero() {
+  return `
+  <div class="demo-title">Humanity Hero</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d;text-align:center">
+    <div style="font-size:2.2rem;margin-bottom:8px">🦸</div>
+    <div style="font-size:.72rem;color:#6b7280;margin-bottom:4px">Your contributions have helped</div>
+    <div id="hero-count" style="font-size:2.4rem;font-weight:900;color:#F59E0B;letter-spacing:-.03em">0</div>
+    <div style="font-size:.78rem;color:#8b949e;margin-bottom:16px">people learn gamification design</div>
+    <button onclick="heroContribute()"
+      style="background:#F59E0B;color:#111;border:none;border-radius:8px;padding:8px 20px;font-size:.82rem;font-weight:700;cursor:pointer">
+      + Make an Impact
+    </button>
+  </div>`;
+}
+
+window.heroContribute = function() {
+  const el = document.getElementById('hero-count');
+  if (!el) return;
+  let current = parseInt(el.textContent.replace(/,/g, ''), 10);
+  const target = current + Math.floor(Math.random() * 40 + 15);
+  const step = () => {
+    current = Math.min(current + Math.ceil((target - current) / 4), target);
+    el.textContent = current.toLocaleString();
+    if (current < target) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+};
+
+// ── CD1: Co-creationist ──────────────────────────────────────────
+let coVotes = { a: 62, b: 38 };
+let coHasVoted = false;
+
+function renderCoCreationist() {
+  const total = coVotes.a + coVotes.b;
+  const pctA = Math.round(coVotes.a / total * 100);
+  const pctB = 100 - pctA;
+  return `
+  <div class="demo-title">Co-creationist</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d">
+    <div style="font-size:.78rem;color:#e6edf3;font-weight:700;margin-bottom:4px">What should we build next?</div>
+    <div style="font-size:.65rem;color:#6b7280;margin-bottom:14px">You're shaping the product roadmap</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div onclick="coVote('a')" id="co-opt-a"
+        style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <span style="font-size:.8rem;color:#e6edf3">🗺 Technique Explorer</span>
+          <span id="co-pct-a" style="font-size:.72rem;font-weight:700;color:#F59E0B">${pctA}%</span>
+        </div>
+        <div style="height:5px;background:#21262d;border-radius:3px;overflow:hidden">
+          <div id="co-bar-a" style="width:${pctA}%;height:100%;background:#F59E0B;transition:width .4s;border-radius:3px"></div>
+        </div>
+      </div>
+      <div onclick="coVote('b')" id="co-opt-b"
+        style="background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+          <span style="font-size:.8rem;color:#e6edf3">🧪 Gamification Simulator</span>
+          <span id="co-pct-b" style="font-size:.72rem;font-weight:700;color:#F59E0B">${pctB}%</span>
+        </div>
+        <div style="height:5px;background:#21262d;border-radius:3px;overflow:hidden">
+          <div id="co-bar-b" style="width:${pctB}%;height:100%;background:#F59E0B;transition:width .4s;border-radius:3px"></div>
+        </div>
+      </div>
+    </div>
+    <div id="co-voted" style="font-size:.65rem;color:#6b7280;text-align:center;margin-top:10px;${coHasVoted?'':'display:none'}">
+      ✓ Vote counted — thanks for shaping this project!
+    </div>
+  </div>`;
+}
+
+window.coVote = function(choice) {
+  if (coHasVoted) return;
+  coHasVoted = true;
+  coVotes[choice] += 5;
+  const total = coVotes.a + coVotes.b;
+  ['a','b'].forEach(k => {
+    const pct = Math.round(coVotes[k] / total * 100);
+    const pctEl = document.getElementById(`co-pct-${k}`);
+    const barEl = document.getElementById(`co-bar-${k}`);
+    const optEl = document.getElementById(`co-opt-${k}`);
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (barEl) barEl.style.width = pct + '%';
+    if (optEl && k === choice) optEl.style.borderColor = '#F59E0B';
+  });
+  const votedEl = document.getElementById('co-voted');
+  if (votedEl) votedEl.style.display = 'block';
+};
+
+function initCoCreationist() { coVotes = {a:62, b:38}; coHasVoted = false; }
 
 // ── CD2: XP Level-Up ─────────────────────────────────────────────
 function renderXPLevelUp() {
