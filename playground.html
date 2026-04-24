@@ -205,8 +205,8 @@ const DRIVES = [
     tabs:[
       {name:'Live Pulse',     render:()=>renderLivePulse(),    init:()=>initLivePulse()},
       {name:'Trophy Shelf',   render:()=>renderTrophyShelf(),  init:()=>{}},
-      {name:'Group Quest',    render:()=>renderGroupQuest(),   init:()=>{}},
-      {name:'Gift Boost',    render:()=>renderSocialGifting(),init:()=>{}},
+      {name:'Group Quest',    render:()=>renderGroupQuest(),   init:()=>initGroupQuest()},
+      {name:'Gift Boost',    render:()=>renderSocialGifting(),init:()=>initSocialGifting()},
     ]},
   { cd:6, name:'Scarcity & Impatience',        icon:'⏳', color:'#F97316',
     hat:'⬛ Black Hat', brain:'🔢 Left Brain',
@@ -214,8 +214,8 @@ const DRIVES = [
     tabs:[
       {name:'Event Ticket',    render:()=>renderEventTicket(),         init:()=>initEventTicket()},
       {name:'Appointment',     render:()=>renderAppointmentDynamics(), init:()=>initAppointmentDynamics()},
-      {name:'Last Mile',       render:()=>renderLastMileDrive(),       init:()=>{}},
-      {name:'Prize Pacing',    render:()=>renderPrizePacing(),         init:()=>{}},
+      {name:'Last Mile',       render:()=>renderLastMileDrive(),       init:()=>initLastMileDrive()},
+      {name:'Prize Pacing',    render:()=>renderPrizePacing(),         init:()=>initPrizePacing()},
     ]},
   { cd:7, name:'Unpredictability & Curiosity', icon:'🎲', color:'#06B6D4',
     hat:'⬛ Black Hat', brain:'🧠 Right Brain',
@@ -240,11 +240,13 @@ const DRIVES = [
 let activeCd = null;
 
 // Interval handles for all auto-running demos (cleared on drive/tab switch)
-let apptInterval = null;
-let lossInterval = null;
-let fomoInterval = null;
-let rollInterval = null;
-let chainTimer   = null;
+let pulseInterval    = null;
+let countdownInterval= null;
+let apptInterval     = null;
+let lossInterval     = null;
+let fomoInterval     = null;
+let rollInterval     = null;
+let chainTimer       = null;
 
 // ── Build playground octagon ────────────────────────────────────
 const pgSvg = document.getElementById('pg-oct-svg');
@@ -1024,7 +1026,10 @@ window.claimStamp = function(cd) {
     saveStamps(claimed);
   }
   const demoEl = document.getElementById('demo-content');
-  if (demoEl) { demoEl.innerHTML = renderPassportStamps(); }
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar ? tabBar.outerHTML : '') + renderPassportStamps();
+  }
 };
 
 function initPassportStamps() {}
@@ -1180,8 +1185,6 @@ const PULSE_MSGS = [
   '💡 15 designers are using the Combo Builder',
   '🔥 A streak champion in Seoul: 42 days running',
 ];
-let pulseInterval = null;
-
 function renderLivePulse() {
   return `
   <div class="demo-title">Live Pulse</div>
@@ -1287,6 +1290,8 @@ window.gqContribute = function() {
   }
 };
 
+function initGroupQuest() { groupProgress = 31; }
+
 // ── CD5: Social Gifting ──────────────────────────────────────────
 const GIFT_TEAMMATES = ['Maya K. 🎨','Luca T. 💻','Rin S. 📚'];
 let giftSelected = null;
@@ -1332,9 +1337,10 @@ window.giftSend = function() {
   if (btn) { btn.disabled=true; btn.style.opacity='.5'; btn.textContent='✓ Sent'; }
 };
 
+function initSocialGifting() { giftSelected = null; }
+
 // ── CD6: Event Ticket ────────────────────────────────────────
 let ticketClaimed = false;
-let countdownInterval = null;
 let remainingSeconds = 23 * 3600 + 47 * 60 + 12;
 
 function renderEventTicket() {
@@ -1376,8 +1382,10 @@ window.claimTicket = function() {
   if (ticketClaimed) return;
   ticketClaimed = true;
   const demoEl = document.getElementById('demo-content');
-  if (demoEl) demoEl.innerHTML = renderEventTicket();
-  initEventTicket();
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar ? tabBar.outerHTML : '') + renderEventTicket();
+  }
 };
 
 function formatCountdown(s) {
@@ -1508,6 +1516,8 @@ window.lmEarnXP = function(amount, el) {
   if (lmXP>=1000) { const r=document.getElementById('lm-reward'); if(r) r.style.display='block'; }
 };
 
+function initLastMileDrive() { lmXP = 850; }
+
 // ── CD6: Prize Pacing ────────────────────────────────────────────
 const PRIZE_TIERS = [
   {xp:0,   icon:'🥉', name:'Bronze',  desc:'Access to basic templates',         color:'#cd7f32'},
@@ -1555,6 +1565,8 @@ window.ppEarnXP = function() {
     demoEl.innerHTML = (tabBar?tabBar.outerHTML:'') + renderPrizePacing();
   }
 };
+
+function initPrizePacing() { prizeXP = 0; }
 
 // ── CD7: Scratch Card ────────────────────────────────────────
 const SCRATCH_POOL = [
@@ -1607,7 +1619,10 @@ window.revealScratch = function() {
 
 window.resetScratch = function() {
   const demoEl = document.getElementById('demo-content');
-  if (demoEl) demoEl.innerHTML = renderScratchCard();
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar ? tabBar.outerHTML : '') + renderScratchCard();
+  }
 };
 
 function initScratchCard() {}
@@ -1797,7 +1812,10 @@ function renderStreakTracker() {
 window.keepStreak = function() {
   streakKept = true;
   const demoEl = document.getElementById('demo-content');
-  if (demoEl) { demoEl.innerHTML = renderStreakTracker(); }
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar ? tabBar.outerHTML : '') + renderStreakTracker();
+  }
 };
 
 function initStreakTracker() { streakKept = false; }
