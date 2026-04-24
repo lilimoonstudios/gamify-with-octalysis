@@ -212,7 +212,10 @@ const DRIVES = [
     hat:'⬛ Black Hat', brain:'🔢 Left Brain',
     desc:'Wanting something more because you cannot have it yet. Countdown timers and limited availability create urgent desire.',
     tabs:[
-      {name:'Event Ticket', render:()=>renderEventTicket(), init:()=>initEventTicket()},
+      {name:'Event Ticket',    render:()=>renderEventTicket(),         init:()=>initEventTicket()},
+      {name:'Appointment',     render:()=>renderAppointmentDynamics(), init:()=>initAppointmentDynamics()},
+      {name:'Last Mile Drive', render:()=>renderLastMileDrive(),       init:()=>{}},
+      {name:'Prize Pacing',    render:()=>renderPrizePacing(),         init:()=>{}},
     ]},
   { cd:7, name:'Unpredictability & Curiosity', icon:'🎲', color:'#06B6D4',
     hat:'⬛ Black Hat', brain:'🧠 Right Brain',
@@ -1389,6 +1392,163 @@ function initEventTicket() {
     el.textContent = formatCountdown(remainingSeconds);
   }, 1000);
 }
+
+// ── CD6: Appointment Dynamics ────────────────────────────────────
+// apptInterval declared in Task 1
+let apptSeconds  = 8 * 60 + 42;
+let apptClaimed  = false;
+
+function renderAppointmentDynamics() {
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const doneDays = [0,1];
+  const todayIdx = 2;
+  const dots = days.map((d,i) => {
+    let bg, border, color;
+    if (apptClaimed && i===todayIdx) { bg='#10B981'; border='#059669'; color='#6ee7b7'; }
+    else if (doneDays.includes(i)) { bg='#F97316'; border='#ea580c'; color='#fff'; }
+    else if (i===todayIdx) { bg='transparent'; border='#F97316'; color='#F97316'; }
+    else { bg='transparent'; border='#30363d'; color='#6b7280'; }
+    return `<div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+      <div style="width:28px;height:28px;border-radius:50%;background:${bg};border:2px solid ${border};display:flex;align-items:center;justify-content:center;font-size:.6rem;color:${color};font-weight:700">
+        ${(apptClaimed&&i===todayIdx)||doneDays.includes(i)?'✓':d[0]}
+      </div>
+      <span style="font-size:.52rem;color:#6b7280">${d}</span>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="demo-title">Appointment Dynamics</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d;text-align:center">
+    <div style="font-size:.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Daily Reward</div>
+    <div style="font-size:.88rem;font-weight:800;color:#e6edf3;margin-bottom:12px">Come back every day to keep your streak</div>
+    <div style="display:flex;justify-content:center;gap:6px;margin-bottom:16px">${dots}</div>
+    ${apptClaimed
+      ? `<div style="background:#064e3b;border:1px solid #059669;border-radius:8px;padding:10px;font-size:.78rem;font-weight:700;color:#6ee7b7">✓ Reward collected! Come back tomorrow.</div>`
+      : `<div style="margin-bottom:10px">
+          <div style="font-size:.62rem;color:#6b7280">Next reward expires in</div>
+          <div id="appt-countdown" style="font-size:1.8rem;font-weight:900;color:#F97316;letter-spacing:-.02em">${formatCountdown(apptSeconds)}</div>
+        </div>
+        <button onclick="apptClaim()" style="background:#F97316;color:#fff;border:none;border-radius:8px;padding:9px 24px;font-size:.82rem;font-weight:700;cursor:pointer">
+          Collect Today's Reward
+        </button>`}
+  </div>`;
+}
+
+window.apptClaim = function() {
+  apptClaimed = true;
+  if (apptInterval) { clearInterval(apptInterval); apptInterval=null; }
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar?tabBar.outerHTML:'') + renderAppointmentDynamics();
+  }
+};
+
+function initAppointmentDynamics() {
+  apptClaimed = false; apptSeconds = 8*60+42;
+  if (apptInterval) clearInterval(apptInterval);
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar?tabBar.outerHTML:'') + renderAppointmentDynamics();
+  }
+  apptInterval = setInterval(() => {
+    const el = document.getElementById('appt-countdown');
+    if (!el) { clearInterval(apptInterval); apptInterval=null; return; }
+    apptSeconds = Math.max(0, apptSeconds-1);
+    el.textContent = formatCountdown(apptSeconds);
+  }, 1000);
+}
+
+// ── CD6: Last Mile Drive ─────────────────────────────────────────
+function renderLastMileDrive() {
+  return `
+  <div class="demo-title">Last Mile Drive</div>
+  <div style="background:#0d1117;border-radius:12px;padding:20px;border:1px solid #21262d">
+    <div style="font-size:.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Level Progress</div>
+    <div style="font-size:.88rem;font-weight:800;color:#e6edf3;margin-bottom:12px">You're almost there — just a little more!</div>
+    <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#6b7280;margin-bottom:4px">
+      <span>Level 5 · Expert</span><span id="lm-label">850 / 1000 XP</span>
+    </div>
+    <div style="height:14px;background:#21262d;border-radius:7px;overflow:hidden;margin-bottom:6px">
+      <div id="lm-bar" style="width:85%;height:100%;background:linear-gradient(90deg,#F97316,#F59E0B);border-radius:7px;transition:width .4s;box-shadow:0 0 10px rgba(249,115,22,.4)"></div>
+    </div>
+    <div style="font-size:.65rem;color:#F97316;text-align:right;margin-bottom:16px">Only 150 XP to go!</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      ${[['🎯 Complete one more task',50],['⚡ Use a daily boost',30],['🤝 Help a teammate',70]].map(([task,xp])=>`
+      <div onclick="lmEarnXP(${xp},this)" style="display:flex;justify-content:space-between;align-items:center;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:8px 12px;cursor:pointer">
+        <span style="font-size:.78rem">${task}</span>
+        <span style="font-size:.68rem;font-weight:700;color:#F97316">+${xp} XP</span>
+      </div>`).join('')}
+    </div>
+    <div id="lm-reward" style="display:none;background:#1a0e04;border:1px solid #F97316;border-radius:8px;padding:12px;text-align:center;margin-top:10px">
+      <div style="font-size:1.2rem">🎉</div>
+      <div style="font-size:.78rem;font-weight:700;color:#F59E0B">Level Up! Welcome to Expert.</div>
+    </div>
+  </div>`;
+}
+
+let lmXP = 850;
+
+window.lmEarnXP = function(amount, el) {
+  if (el.dataset.done) return;
+  el.dataset.done='1'; el.style.opacity='.4'; el.style.pointerEvents='none';
+  el.querySelector('span:last-child').textContent='✓';
+  lmXP = Math.min(lmXP+amount, 1000);
+  const bar = document.getElementById('lm-bar');
+  const lbl = document.getElementById('lm-label');
+  if (bar) bar.style.width=(lmXP/1000*100)+'%';
+  if (lbl) lbl.textContent=lmXP+' / 1000 XP';
+  if (lmXP>=1000) { const r=document.getElementById('lm-reward'); if(r) r.style.display='block'; }
+};
+
+// ── CD6: Prize Pacing ────────────────────────────────────────────
+const PRIZE_TIERS = [
+  {xp:0,   icon:'🥉', name:'Bronze',  desc:'Access to basic templates',         color:'#cd7f32'},
+  {xp:100, icon:'🥈', name:'Silver',  desc:'Unlock the Combo Builder pro mode', color:'#9ca3af'},
+  {xp:250, icon:'🥇', name:'Gold',    desc:'Early access to new techniques',    color:'#F59E0B'},
+  {xp:500, icon:'💎', name:'Diamond', desc:'Personal feedback from the team',   color:'#06B6D4'},
+];
+let prizeXP = 0;
+
+function renderPrizePacing() {
+  return `
+  <div class="demo-title">Prize Pacing</div>
+  <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
+    <div style="font-size:.68rem;color:#6b7280;margin-bottom:12px">Each milestone reveals the next reward</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px">
+      ${PRIZE_TIERS.map(t=>{
+        const unlocked = prizeXP>=t.xp;
+        return `<div style="display:flex;align-items:center;gap:10px;background:#161b22;border:1px solid ${unlocked?t.color:'#30363d'};border-radius:8px;padding:10px 12px;opacity:${unlocked?'1':'.5'}">
+          <span style="font-size:1.3rem">${unlocked?t.icon:'🔒'}</span>
+          <div style="flex:1">
+            <div style="font-size:.75rem;font-weight:700;color:${unlocked?t.color:'#6b7280'}">${t.name}</div>
+            <div style="font-size:.65rem;color:#6b7280">${unlocked?t.desc:'Reach '+t.xp+' XP to reveal'}</div>
+          </div>
+          ${unlocked?`<span style="font-size:.62rem;font-weight:700;color:${t.color}">Unlocked</span>`:''}
+        </div>`;
+      }).join('')}
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.65rem;color:#6b7280;margin-bottom:4px">
+      <span>Your XP</span><span id="pp-label">${prizeXP} XP</span>
+    </div>
+    <div style="height:6px;background:#21262d;border-radius:3px;overflow:hidden;margin-bottom:12px">
+      <div id="pp-bar" style="width:${Math.min(prizeXP/500*100,100)}%;height:100%;background:linear-gradient(90deg,#F97316,#F59E0B);border-radius:3px;transition:width .4s"></div>
+    </div>
+    <button onclick="ppEarnXP()" style="background:#F97316;color:#fff;border:none;border-radius:8px;padding:8px;font-size:.82rem;font-weight:700;cursor:pointer;width:100%">
+      + Earn 75 XP
+    </button>
+  </div>`;
+}
+
+window.ppEarnXP = function() {
+  prizeXP = Math.min(prizeXP+75, 500);
+  const demoEl = document.getElementById('demo-content');
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar?tabBar.outerHTML:'') + renderPrizePacing();
+  }
+};
 
 // ── CD7: Scratch Card ────────────────────────────────────────
 const SCRATCH_POOL = [
