@@ -659,7 +659,6 @@ const BOSS_QUESTIONS = [
 let bossQIdx = 0;
 
 function renderBossFight() {
-  bossHp = 62; bossLocked = false; bossQIdx = 0;
   return `
   <div class="demo-title">Boss Fight</div>
   <div style="background:#0d1117;border-radius:12px;padding:16px;border:1px solid #21262d">
@@ -1398,7 +1397,10 @@ function initEventTicket() {
   remainingSeconds = 23 * 3600 + 47 * 60 + 12;
   if (countdownInterval) clearInterval(countdownInterval);
   const demoEl = document.getElementById('demo-content');
-  if (demoEl) demoEl.innerHTML = renderEventTicket();
+  if (demoEl) {
+    const tabBar = demoEl.querySelector('.tab-bar');
+    demoEl.innerHTML = (tabBar ? tabBar.outerHTML : '') + renderEventTicket();
+  }
   countdownInterval = setInterval(() => {
     const el = document.getElementById('ticket-countdown');
     if (!el) { clearInterval(countdownInterval); return; }
